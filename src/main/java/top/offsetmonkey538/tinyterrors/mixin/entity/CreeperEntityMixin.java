@@ -33,7 +33,7 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
         super(type, world);
     }
     @Unique
-    private static final EntityDimensions tinyterrors$BABY_DIMENSIONS = EntityType.ZOMBIE.getDimensions().scaled(0.5F) /* TODO: might be required? .withEyeHeight(0.93F) */;
+    private static final EntityDimensions tinyterrors$BABY_DIMENSIONS = EntityType.ZOMBIE.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
