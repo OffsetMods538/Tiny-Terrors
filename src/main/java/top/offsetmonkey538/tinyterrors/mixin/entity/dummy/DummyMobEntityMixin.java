@@ -2,11 +2,15 @@ package top.offsetmonkey538.tinyterrors.mixin.entity.dummy;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -50,5 +54,12 @@ public abstract class DummyMobEntityMixin extends DummyLivingEntityMixin {
     )
     protected void tinyterrors$readCustomData(ReadView view, Operation<Void> original) {
         original.call(view);
+    }
+
+    @WrapMethod(
+            method = "initialize"
+    )
+    protected EntityData tinyterrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
+        return original.call(world, difficulty, spawnReason, entityData);
     }
 }

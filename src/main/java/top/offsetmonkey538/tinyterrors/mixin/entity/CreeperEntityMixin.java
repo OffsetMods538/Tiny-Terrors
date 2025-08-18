@@ -2,9 +2,7 @@ package top.offsetmonkey538.tinyterrors.mixin.entity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -12,10 +10,15 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,6 +27,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.offsetmonkey538.tinyterrors.entity.EntityWithBaby;
 import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
+
+import java.util.List;
 
 import static top.offsetmonkey538.tinyterrors.TinyTerrors.*;
 
@@ -90,6 +95,20 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
         super.tinyterrors$readCustomData(view, original);
     }
 
+    @Override
+    protected EntityData tinyterrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
+        final Random random = world.getRandom();
+
+        entityData = super.tinyterrors$initialize(world, difficulty, spawnReason, entityData, original);
+
+        if (!config.get().creeperConfig.shouldBeBaby(random)) return entityData;
+        this.setBaby(true);
+
+        if (config.get().creeperConfig.shouldBeJockey(random)) tinyterrors$makeJockey(world, difficulty);
+
+        return entityData;
+    }
+
 
     // Overrides from LivingEntity
     @Override
@@ -107,5 +126,29 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
     @Override
     protected EntityDimensions tinyterrors$getBaseDimensions(EntityPose pose, Operation<EntityDimensions> original) {
         return this.isBaby() ? tinyterrors$BABY_DIMENSIONS : super.tinyterrors$getBaseDimensions(pose, original);
+    }
+
+
+    @Unique
+    private void tinyterrors$makeJockey(final ServerWorldAccess world, final LocalDifficulty difficulty) {
+        // Try with existing chicken
+        final List<ChickenEntity> nearbyChickens = world.getEntitiesByClass(ChickenEntity.class, this.getBoundingBox().expand(5.0, 3.0, 5.0), EntityPredicates.NOT_MOUNTED);
+        if (!nearbyChickens.isEmpty()) {
+            final ChickenEntity chicken = nearbyChickens.getFirst();
+            chicken.setHasJockey(true);
+            this.startRiding(chicken);
+            return;
+        }
+
+
+        // Spawn a new chicken
+        final ChickenEntity chicken = EntityType.CHICKEN.create(this.getWorld(), SpawnReason.JOCKEY);
+        if (chicken == null) return;
+
+        chicken.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0F);
+        chicken.initialize(world, difficulty, SpawnReason.JOCKEY, null);
+        chicken.setHasJockey(true);
+        this.startRiding(chicken);
+        world.spawnEntity(chicken);
     }
 }
