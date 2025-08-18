@@ -11,8 +11,20 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.MOD_ID;
 
 public class ModConfig implements Config {
 
-    @Comment("This is an example config entry.")
-    public String coolValue = "Hello, World!";
+    public BabyMobConfig creeperConfig = new BabyCreeperConfig();
+
+    public static class BabyMobConfig {
+        @Comment("Default: 0.5")
+        public double speedMultiplier = 0.5;
+
+        @Comment("Default: 0.5")
+        public double xpMultiplier = 2.5;
+    }
+
+    public static class BabyCreeperConfig extends BabyMobConfig {
+
+    }
+
 
     @Override
     public @NotNull Path getFilePath() {

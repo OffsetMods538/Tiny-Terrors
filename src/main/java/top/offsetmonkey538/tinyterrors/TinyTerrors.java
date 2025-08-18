@@ -17,6 +17,9 @@ public class TinyTerrors implements ModInitializer {
 
 	public static final ConfigHolder<ModConfig> config = ConfigManager.init(ConfigHolder.create(ModConfig::new, LOGGER::error));
 
+    public static final Identifier BABY_SPEED_MODIFIER_ID = id("baby_speed_multiplier");
+    public static final String IS_BABY_KEY = "TinyTerrorsIsBaby";
+
 	@Override
 	public void onInitialize() {
 		ModItems.register();
