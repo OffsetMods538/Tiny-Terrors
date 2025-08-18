@@ -22,17 +22,17 @@ public class ModConfig implements Config {
         public double xpMultiplier = 2.5;
 
         @Comment("Default: 0.05")
-        public float spawnChance = 0.05f;
+        public double spawnChance = 0.05;
 
         @Comment("Default: 0.05")
-        public float spawnJockeyChance = 0.05f;
+        public double spawnJockeyChance = 0.05;
 
         public boolean shouldBeBaby(final Random random) {
-            return random.nextFloat() < spawnChance;
+            return random.nextDouble() < spawnChance;
         }
 
         public boolean shouldBeJockey(final Random random) {
-            return random.nextFloat() < spawnJockeyChance;
+            return random.nextDouble() < spawnJockeyChance;
         }
     }
 
