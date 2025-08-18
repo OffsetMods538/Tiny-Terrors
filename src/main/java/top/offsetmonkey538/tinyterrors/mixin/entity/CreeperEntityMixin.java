@@ -21,6 +21,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,6 +35,9 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.*;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements EntityWithBaby {
+    @Shadow
+    private int fuseTime;
+
     public CreeperEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -65,6 +69,9 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
         
         final World world = this.getWorld();
         if (world == null || world.isClient) return;
+
+
+        this.fuseTime = config.get().creeperConfig.fuseTime;
         
 
         final EntityAttributeInstance movementSpeed = this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);

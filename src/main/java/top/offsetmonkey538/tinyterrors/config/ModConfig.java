@@ -12,7 +12,7 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.MOD_ID;
 
 public class ModConfig implements Config {
 
-    public BabyMobConfig creeperConfig = new BabyCreeperConfig();
+    public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
 
     public static class BabyMobConfig {
         @Comment("Default: 0.5")
@@ -37,7 +37,8 @@ public class ModConfig implements Config {
     }
 
     public static class BabyCreeperConfig extends BabyMobConfig {
-
+        @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 15")
+        public int fuseTime = 15;
     }
 
 
