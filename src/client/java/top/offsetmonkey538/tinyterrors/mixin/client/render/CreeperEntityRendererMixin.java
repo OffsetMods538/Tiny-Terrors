@@ -38,14 +38,4 @@ public abstract class CreeperEntityRendererMixin extends DummyLivingEntityRender
         this.model = ((CreeperEntityRenderState) state).baby ? tinyterrors$babyModel : this.tinyterrors$normalModel;
         super.tinyterrors$render(state, matrices, vertexConsumers, light, original);
     }
-
-    /*
-    @Override
-    protected void tinyterrors$render(CreeperEntityRenderState renderState, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, Operation<Void> original) {
-        this.model = tinyterrors$babyModel;
-        System.out.println("HI");
-
-        super.tinyterrors$render(renderState, matrixStack, vertexConsumerProvider, light, original);
-    }
-    */
 }
