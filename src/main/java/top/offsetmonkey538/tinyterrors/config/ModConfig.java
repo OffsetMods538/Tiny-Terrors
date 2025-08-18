@@ -39,6 +39,8 @@ public class ModConfig implements Config {
     public static class BabyCreeperConfig extends BabyMobConfig {
         @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 15")
         public int fuseTime = 15;
+        @Comment("Default: 1.5")
+        public double explosionRadius = 1.5;
     }
 
 
