@@ -5,8 +5,6 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import top.offsetmonkey538.tinyterrors.item.ModItems;
-
 import top.offsetmonkey538.tinyterrors.config.ModConfig;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigHolder;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigManager;
@@ -22,7 +20,7 @@ public class TinyTerrors implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModItems.register();
+
 	}
 
 	public static Identifier id(String path) {

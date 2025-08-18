@@ -2,7 +2,6 @@ package top.offsetmonkey538.tinyterrors.util;
 
 import net.minecraft.client.render.entity.model.EntityModel;
 
-import java.security.Provider;
 import java.util.function.Supplier;
 
 public final class CreeperSwirlRenderContext {

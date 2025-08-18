@@ -27,7 +27,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.offsetmonkey538.tinyterrors.entity.EntityWithBaby;
 import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
 
 import java.util.List;
@@ -35,7 +34,7 @@ import java.util.List;
 import static top.offsetmonkey538.tinyterrors.TinyTerrors.*;
 
 @Mixin(CreeperEntity.class)
-public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements EntityWithBaby {
+public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     @Shadow
     private int fuseTime;
 
