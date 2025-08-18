@@ -18,22 +18,22 @@ import top.offsetmonkey538.tinyterrors.util.CreeperSwirlRenderContext;
 public abstract class CreeperChargeFeatureRendererMixin {
 
     @Unique
-    private CreeperEntityModel tinyterrors$babyModel;
+    private CreeperEntityModel tiny_terrors$babyModel;
 
     @Inject(
             method = "<init>",
             at = @At("TAIL")
     )
-    private void tinyterrors$initBabyModel(FeatureRendererContext<CreeperEntityRenderState, CreeperEntityModel> context, LoadedEntityModels loader, CallbackInfo ci) {
-        tinyterrors$babyModel = new CreeperEntityModel(loader.getModelPart(ModEntityModelLayers.CREEPER_BABY_ARMOR));
+    private void tiny_terrors$initBabyModel(FeatureRendererContext<CreeperEntityRenderState, CreeperEntityModel> context, LoadedEntityModels loader, CallbackInfo ci) {
+        tiny_terrors$babyModel = new CreeperEntityModel(loader.getModelPart(ModEntityModelLayers.CREEPER_BABY_ARMOR));
     }
 
     @ModifyReturnValue(
             method = "getEnergySwirlModel()Lnet/minecraft/client/render/entity/model/CreeperEntityModel;",
             at = @At("RETURN")
     )
-    private CreeperEntityModel tinyterrors$useBabyModel(CreeperEntityModel original) {
-        if (CreeperSwirlRenderContext.isBaby.get()) return tinyterrors$babyModel;
+    private CreeperEntityModel tiny_terrors$useBabyModel(CreeperEntityModel original) {
+        if (CreeperSwirlRenderContext.isBaby.get()) return tiny_terrors$babyModel;
         return original;
     }
 }

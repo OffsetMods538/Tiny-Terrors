@@ -19,7 +19,7 @@ public abstract class DummyLivingEntityRendererMixin {
     @WrapMethod(
             method = "render(Lnet/minecraft/client/render/entity/state/EntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
     )
-    protected void tinyterrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
+    protected void tiny_terrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
         original.call(state, matrices, vertexConsumers, light);
     }
 }

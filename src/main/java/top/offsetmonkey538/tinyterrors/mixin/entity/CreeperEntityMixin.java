@@ -43,14 +43,14 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
         super(type, world);
     }
     @Unique
-    private static final EntityDimensions tinyterrors$BABY_DIMENSIONS = EntityType.ZOMBIE.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
+    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.ZOMBIE.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
-    private static final TrackedData<Boolean> tinyterrors$BABY = DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> tiny_terrors$BABY = DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
-    private static final EntityAttributeModifier tinyterrors$BABY_SPEED_BONUS = new EntityAttributeModifier(
+    private static final EntityAttributeModifier tiny_terrors$BABY_SPEED_BONUS = new EntityAttributeModifier(
             BABY_SPEED_MODIFIER_ID, config.get().creeperConfig.speedMultiplier, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
     );
 
@@ -58,8 +58,8 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
             method = "initDataTracker",
             at = @At("TAIL")
     )
-    private void tinyterrors$addBabyData(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(tinyterrors$BABY, false);
+    private void tiny_terrors$addBabyData(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(tiny_terrors$BABY, false);
     }
 
     @Definition(id = "explosionRadius", field = "Lnet/minecraft/entity/mob/CreeperEntity;explosionRadius:I")
@@ -70,15 +70,15 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
                     "MIXINEXTRAS:EXPRESSION"
             )
     )
-    private float tinyterrors$setBabyExplosionRadius(float original) {
+    private float tiny_terrors$setBabyExplosionRadius(float original) {
         return isBaby() ? (float) config.get().creeperConfig.explosionRadius : original;
     }
 
 
     // Overrides from MobEntity
     @Override
-    protected void tinyterrors$setBaby(boolean newValue, Operation<Void> original) {
-        this.getDataTracker().set(tinyterrors$BABY, newValue);
+    protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
+        this.getDataTracker().set(tiny_terrors$BABY, newValue);
         
         final World world = this.getWorld();
         if (world == null || world.isClient) return;
@@ -91,40 +91,40 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
         if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
 
         movementSpeed.removeModifier(BABY_SPEED_MODIFIER_ID);
-        if (newValue) movementSpeed.addTemporaryModifier(tinyterrors$BABY_SPEED_BONUS);
+        if (newValue) movementSpeed.addTemporaryModifier(tiny_terrors$BABY_SPEED_BONUS);
     }
 
     @Override
-    protected int tinyterrors$getExperienceToDrop(ServerWorld world, Operation<Integer> original) {
+    protected int tiny_terrors$getExperienceToDrop(ServerWorld world, Operation<Integer> original) {
         if (this.isBaby()) this.experiencePoints = (int) (this.experiencePoints * config.get().creeperConfig.xpMultiplier);
 
-        return super.tinyterrors$getExperienceToDrop(world, original);
+        return super.tiny_terrors$getExperienceToDrop(world, original);
     }
 
     @Override
-    protected void tinyterrors$writeCustomData(WriteView view, Operation<Void> original) {
+    protected void tiny_terrors$writeCustomData(WriteView view, Operation<Void> original) {
         view.putBoolean(IS_BABY_KEY, this.isBaby());
 
-        super.tinyterrors$writeCustomData(view, original);
+        super.tiny_terrors$writeCustomData(view, original);
     }
 
     @Override
-    protected void tinyterrors$readCustomData(ReadView view, Operation<Void> original) {
+    protected void tiny_terrors$readCustomData(ReadView view, Operation<Void> original) {
         this.setBaby(view.getBoolean(IS_BABY_KEY, false));
 
-        super.tinyterrors$readCustomData(view, original);
+        super.tiny_terrors$readCustomData(view, original);
     }
 
     @Override
-    protected EntityData tinyterrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
+    protected EntityData tiny_terrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
         final Random random = world.getRandom();
 
-        entityData = super.tinyterrors$initialize(world, difficulty, spawnReason, entityData, original);
+        entityData = super.tiny_terrors$initialize(world, difficulty, spawnReason, entityData, original);
 
         if (!config.get().creeperConfig.shouldBeBaby(random)) return entityData;
         this.setBaby(true);
 
-        if (config.get().creeperConfig.shouldBeJockey(random)) tinyterrors$makeJockey(world, difficulty);
+        if (config.get().creeperConfig.shouldBeJockey(random)) tiny_terrors$makeJockey(world, difficulty);
 
         return entityData;
     }
@@ -132,25 +132,25 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin implements 
 
     // Overrides from LivingEntity
     @Override
-    protected boolean tinyterrors$isBaby(Operation<Boolean> original) {
-        return this.getDataTracker().get(tinyterrors$BABY);
+    protected boolean tiny_terrors$isBaby(Operation<Boolean> original) {
+        return this.getDataTracker().get(tiny_terrors$BABY);
     }
 
     @Override
-    protected void tinyterrors$onTrackedDataSet(TrackedData<?> data, Operation<Void> original) {
-        if (tinyterrors$BABY.equals(data)) this.calculateDimensions();
+    protected void tiny_terrors$onTrackedDataSet(TrackedData<?> data, Operation<Void> original) {
+        if (tiny_terrors$BABY.equals(data)) this.calculateDimensions();
 
-        super.tinyterrors$onTrackedDataSet(data, original);
+        super.tiny_terrors$onTrackedDataSet(data, original);
     }
 
     @Override
-    protected EntityDimensions tinyterrors$getBaseDimensions(EntityPose pose, Operation<EntityDimensions> original) {
-        return this.isBaby() ? tinyterrors$BABY_DIMENSIONS : super.tinyterrors$getBaseDimensions(pose, original);
+    protected EntityDimensions tiny_terrors$getBaseDimensions(EntityPose pose, Operation<EntityDimensions> original) {
+        return this.isBaby() ? tiny_terrors$BABY_DIMENSIONS : super.tiny_terrors$getBaseDimensions(pose, original);
     }
 
 
     @Unique
-    private void tinyterrors$makeJockey(final ServerWorldAccess world, final LocalDifficulty difficulty) {
+    private void tiny_terrors$makeJockey(final ServerWorldAccess world, final LocalDifficulty difficulty) {
         // Try with existing chicken
         final List<ChickenEntity> nearbyChickens = world.getEntitiesByClass(ChickenEntity.class, this.getBoundingBox().expand(5.0, 3.0, 5.0), EntityPredicates.NOT_MOUNTED);
         if (!nearbyChickens.isEmpty()) {

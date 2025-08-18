@@ -28,21 +28,21 @@ public abstract class DummyLivingEntityMixin extends Entity {
     @WrapMethod(
             method = "isBaby"
     )
-    protected boolean tinyterrors$isBaby(Operation<Boolean> original) {
+    protected boolean tiny_terrors$isBaby(Operation<Boolean> original) {
         return original.call();
     }
 
     @WrapMethod(
             method = "onTrackedDataSet"
     )
-    protected void tinyterrors$onTrackedDataSet(TrackedData<?> data, Operation<Void> original) {
+    protected void tiny_terrors$onTrackedDataSet(TrackedData<?> data, Operation<Void> original) {
         original.call(data);
     }
 
     @WrapMethod(
             method = "getBaseDimensions"
     )
-    protected EntityDimensions tinyterrors$getBaseDimensions(EntityPose pose, Operation<EntityDimensions> original) {
+    protected EntityDimensions tiny_terrors$getBaseDimensions(EntityPose pose, Operation<EntityDimensions> original) {
         return original.call(pose);
     }
 }

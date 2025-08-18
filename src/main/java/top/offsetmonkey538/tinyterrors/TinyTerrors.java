@@ -10,7 +10,7 @@ import top.offsetmonkey538.tinyterrors.item.ModItems;
 import top.offsetmonkey538.tinyterrors.config.ModConfig;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigHolder;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigManager;
-//TODO: use tiny_terrors instead of tinyterrors for prefixing mixin stuff
+
 public class TinyTerrors implements ModInitializer {
 	public static final String MOD_ID = "tiny-terrors";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);

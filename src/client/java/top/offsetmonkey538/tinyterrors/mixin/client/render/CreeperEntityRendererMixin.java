@@ -20,22 +20,22 @@ import top.offsetmonkey538.tinyterrors.mixin.client.render.dummy.DummyLivingEnti
 public abstract class CreeperEntityRendererMixin extends DummyLivingEntityRendererMixin {
 
     @Unique
-    private CreeperEntityModel tinyterrors$babyModel;
+    private CreeperEntityModel tiny_terrors$babyModel;
     @Unique
-    private CreeperEntityModel tinyterrors$normalModel;
+    private CreeperEntityModel tiny_terrors$normalModel;
 
     @Inject(
             method = "<init>",
             at = @At("TAIL")
     )
-    private void tinyterrors$initBabyModel(EntityRendererFactory.Context context, CallbackInfo ci) {
-        tinyterrors$babyModel = new CreeperEntityModel(context.getPart(ModEntityModelLayers.CREEPER_BABY));
-        tinyterrors$normalModel = (CreeperEntityModel) this.model;
+    private void tiny_terrors$initBabyModel(EntityRendererFactory.Context context, CallbackInfo ci) {
+        tiny_terrors$babyModel = new CreeperEntityModel(context.getPart(ModEntityModelLayers.CREEPER_BABY));
+        tiny_terrors$normalModel = (CreeperEntityModel) this.model;
     }
 
     @Override
-    protected void tinyterrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
-        this.model = ((CreeperEntityRenderState) state).baby ? tinyterrors$babyModel : this.tinyterrors$normalModel;
-        super.tinyterrors$render(state, matrices, vertexConsumers, light, original);
+    protected void tiny_terrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
+        this.model = ((CreeperEntityRenderState) state).baby ? tiny_terrors$babyModel : this.tiny_terrors$normalModel;
+        super.tiny_terrors$render(state, matrices, vertexConsumers, light, original);
     }
 }

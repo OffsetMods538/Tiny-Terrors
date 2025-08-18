@@ -31,35 +31,35 @@ public abstract class DummyMobEntityMixin extends DummyLivingEntityMixin {
     @WrapMethod(
             method = "setBaby"
     )
-    protected void tinyterrors$setBaby(boolean newValue, Operation<Void> original) {
+    protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
         original.call(newValue);
     }
 
     @WrapMethod(
             method = "getExperienceToDrop"
     )
-    protected int tinyterrors$getExperienceToDrop(ServerWorld world, Operation<Integer> original) {
+    protected int tiny_terrors$getExperienceToDrop(ServerWorld world, Operation<Integer> original) {
         return original.call(world);
     }
 
     @WrapMethod(
             method = "writeCustomData"
     )
-    protected void tinyterrors$writeCustomData(WriteView view, Operation<Void> original) {
+    protected void tiny_terrors$writeCustomData(WriteView view, Operation<Void> original) {
         original.call(view);
     }
 
     @WrapMethod(
             method = "readCustomData"
     )
-    protected void tinyterrors$readCustomData(ReadView view, Operation<Void> original) {
+    protected void tiny_terrors$readCustomData(ReadView view, Operation<Void> original) {
         original.call(view);
     }
 
     @WrapMethod(
             method = "initialize"
     )
-    protected EntityData tinyterrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
+    protected EntityData tiny_terrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
         return original.call(world, difficulty, spawnReason, entityData);
     }
 }
