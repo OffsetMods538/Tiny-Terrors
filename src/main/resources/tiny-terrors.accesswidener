@@ -1,1 +1,4 @@
 accessWidener    v1    named
+
+## Access widening it so I can use it in a mixin? yeah sure that sounds juuuuuuuuuuuuuust fineeeee :concern:
+accessible class net/minecraft/entity/mob/EndermanEntity$PickUpBlockGoal
