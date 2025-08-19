@@ -35,14 +35,16 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.*;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
-    @Shadow
-    private int fuseTime;
-
     public CreeperEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
+
+    @Shadow
+    private int fuseTime;
+
+
     @Unique
-    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.ZOMBIE.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
+    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.CREEPER.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
