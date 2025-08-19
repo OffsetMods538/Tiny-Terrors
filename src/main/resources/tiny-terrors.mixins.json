@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "entity.CreeperEntityMixin",
+    "entity.ai.CreeperIgniteGoalMixin",
     "entity.dummy.DummyLivingEntityMixin",
     "entity.dummy.DummyMobEntityMixin"
   ],

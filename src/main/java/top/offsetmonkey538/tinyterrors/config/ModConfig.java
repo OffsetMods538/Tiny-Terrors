@@ -10,22 +10,35 @@ import java.nio.file.Path;
 
 import static top.offsetmonkey538.tinyterrors.TinyTerrors.MOD_ID;
 
-public class ModConfig implements Config {
+public final class ModConfig implements Config {
 
     public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
 
     public static class BabyMobConfig {
         @Comment("Default: 0.5")
-        public double speedMultiplier = 0.5;
+        public double speedMultiplier;
 
         @Comment("Default: 0.5")
-        public double xpMultiplier = 2.5;
+        public double xpMultiplier;
 
         @Comment("Default: 0.05")
-        public double spawnChance = 0.05;
+        public double spawnChance;
 
         @Comment("Default: 0.05")
-        public double jockeySpawnChance = 0.05;
+        public double jockeySpawnChance;
+
+        public BabyMobConfig() {
+            this(0.5);
+        }
+        public BabyMobConfig(double speedMultiplier) {
+            this(speedMultiplier, 2.5, 0.1, 0.05);
+        }
+        public BabyMobConfig(double speedMultiplier, double xpMultiplier, double spawnChance, double jockeySpawnChance) {
+            this.speedMultiplier = speedMultiplier;
+            this.xpMultiplier = xpMultiplier;
+            this.spawnChance = spawnChance;
+            this.jockeySpawnChance = jockeySpawnChance;
+        }
 
         public boolean shouldBeBaby(final Random random) {
             return random.nextDouble() < spawnChance;
@@ -37,10 +50,16 @@ public class ModConfig implements Config {
     }
 
     public static class BabyCreeperConfig extends BabyMobConfig {
-        @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 15")
-        public int fuseTime = 15;
-        @Comment("Default: 1.5")
-        public double explosionRadius = 1.5;
+        public BabyCreeperConfig() {
+            super(0.75);
+        }
+
+        @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 5")
+        public int fuseTime = 5;
+        @Comment("Default: 2.5")
+        public double explosionRadius = 2.5;
+        @Comment("Default: 0.5")
+        public double igniteRadiusMultiplier = 0.5;
     }
 
 
