@@ -13,6 +13,7 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.MOD_ID;
 public final class ModConfig implements Config {
 
     public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
+    public BabyEndermanConfig endermanConfig = new BabyEndermanConfig();
 
     public static class BabyMobConfig {
         @Comment("Default: 0.5")
@@ -60,6 +61,10 @@ public final class ModConfig implements Config {
         public double explosionRadius = 2.5;
         @Comment("Default: 0.5")
         public double igniteRadiusMultiplier = 0.5;
+    }
+
+    public static class BabyEndermanConfig extends BabyMobConfig {
+
     }
 
 

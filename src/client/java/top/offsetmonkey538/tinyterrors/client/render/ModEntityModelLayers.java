@@ -10,8 +10,10 @@ import static top.offsetmonkey538.tinyterrors.TinyTerrors.id;
 
 public final class ModEntityModelLayers {
 
-    public static final EntityModelLayer CREEPER_BABY       = register("creeper_baby", "main",  () -> CreeperEntityModel.getTexturedModelData(Dilation.NONE),            14);
-    public static final EntityModelLayer CREEPER_BABY_ARMOR = register("creeper_baby", "armor", () -> CreeperEntityModel.getTexturedModelData(new Dilation(2.0F)), 14);
+    public static final EntityModelLayer CREEPER_BABY       = register("creeper_baby",  "main",  () -> CreeperEntityModel.getTexturedModelData(Dilation.NONE),      14);
+    public static final EntityModelLayer CREEPER_BABY_ARMOR = register("creeper_baby",  "armor", () -> CreeperEntityModel.getTexturedModelData(new Dilation(2.0F)), 14);
+
+    public static final EntityModelLayer ENDERMAN_BABY      = register("enderman_baby", "main",  EndermanEntityModel::getTexturedModelData,                         20.5f);
 
     private static EntityModelLayer register(final String id, final String layerId, final EntityModelLayerRegistry.TexturedModelDataProvider baseProvider, final float headOffset) {
         final EntityModelLayer layer = new EntityModelLayer(id(id), layerId);
