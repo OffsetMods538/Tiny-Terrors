@@ -25,14 +25,14 @@ public class ModConfig implements Config {
         public double spawnChance = 0.05;
 
         @Comment("Default: 0.05")
-        public double spawnJockeyChance = 0.05;
+        public double jockeySpawnChance = 0.05;
 
         public boolean shouldBeBaby(final Random random) {
             return random.nextDouble() < spawnChance;
         }
 
         public boolean shouldBeJockey(final Random random) {
-            return random.nextDouble() < spawnJockeyChance;
+            return random.nextDouble() < jockeySpawnChance;
         }
     }
 
