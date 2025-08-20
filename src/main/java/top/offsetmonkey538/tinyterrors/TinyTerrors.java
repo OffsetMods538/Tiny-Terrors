@@ -1,12 +1,13 @@
 package top.offsetmonkey538.tinyterrors;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import org.slf4j.Logger;
@@ -56,5 +57,16 @@ public class TinyTerrors implements ModInitializer {
         chicken.setHasJockey(true);
         entity.startRiding(chicken);
         world.spawnEntity(chicken);
+    }
+
+    public static EntityData initialize(MobEntity entity, ModConfig.BaseBabyMobConfig config, ServerWorldAccess world, LocalDifficulty difficulty, EntityData entityData) {
+        final Random random = world.getRandom();
+
+        if (!config.shouldBeBaby(random)) return entityData;
+        entity.setBaby(true);
+
+        if (config.shouldBeJockey(random)) makeJockey(entity, world, difficulty);
+
+        return entityData;
     }
 }

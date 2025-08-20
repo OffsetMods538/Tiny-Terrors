@@ -11,6 +11,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -155,16 +156,7 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
 
     @Override
     protected EntityData tiny_terrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
-        final Random random = world.getRandom();
-
-        entityData = super.tiny_terrors$initialize(world, difficulty, spawnReason, entityData, original);
-
-        if (!config.get().endermanConfig.shouldBeBaby(random)) return entityData;
-        this.setBaby(true);
-
-        if (config.get().endermanConfig.shouldBeJockey(random)) makeJockey(this, world, difficulty);
-
-        return entityData;
+        return initialize((MobEntity) (Object) this, config.get().endermanConfig, world, difficulty, super.tiny_terrors$initialize(world, difficulty, spawnReason, entityData, original));
     }
 
 

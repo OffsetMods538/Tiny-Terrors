@@ -12,6 +12,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
@@ -118,16 +119,7 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
 
     @Override
     protected EntityData tiny_terrors$initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, Operation<EntityData> original) {
-        final Random random = world.getRandom();
-
-        entityData = super.tiny_terrors$initialize(world, difficulty, spawnReason, entityData, original);
-
-        if (!config.get().creeperConfig.shouldBeBaby(random)) return entityData;
-        this.setBaby(true);
-
-        if (config.get().creeperConfig.shouldBeJockey(random)) makeJockey(this, world, difficulty);
-
-        return entityData;
+        return initialize((MobEntity) (Object) this, config.get().creeperConfig, world, difficulty, super.tiny_terrors$initialize(world, difficulty, spawnReason, entityData, original));
     }
 
 
