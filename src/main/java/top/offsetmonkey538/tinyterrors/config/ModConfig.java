@@ -52,6 +52,8 @@ public final class ModConfig implements Config {
 
         @Comment("Default: false")
         public boolean canPickUpBlocks = false;
+        @Comment("Default: 0.5")
+        public double teleportRangeMultiplier = 0.5;
     }
 
 

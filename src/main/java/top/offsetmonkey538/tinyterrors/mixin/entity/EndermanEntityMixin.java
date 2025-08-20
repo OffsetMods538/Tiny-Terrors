@@ -1,13 +1,9 @@
 package top.offsetmonkey538.tinyterrors.mixin.entity;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -71,6 +67,51 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
     private @Coerce Goal tiny_terrors$capturePickUpBlockGoal(@Coerce Goal original) {
         tiny_terros$pickUpBlockGoal = original;
         return original;
+    }
+
+    @SuppressWarnings("MixinAnnotationTarget") // MCDev doesn't understand that not all target methods need all the at targets
+    @ModifyExpressionValue(
+            method = {
+                    "teleportRandomly",
+                    "teleportTo(Lnet/minecraft/entity/Entity;)Z"
+            },
+            at = {
+                    @At(
+                            value = "CONSTANT",
+                            args = "doubleValue=64.0"
+                    ),
+                    @At(
+                            value = "CONSTANT",
+                            args = "doubleValue=16.0"
+                    )
+            }
+    )
+    private double tiny_terrors$double$modifyTeleportRange(double original) {
+        return isBaby() ? original * config.get().endermanConfig.teleportRangeMultiplier : original;
+    }
+    @SuppressWarnings("MixinAnnotationTarget") // MCDev doesn't understand that not all target methods need all the at targets
+    @ModifyExpressionValue(
+            method = {
+                    "teleportRandomly",
+                    "teleportTo(Lnet/minecraft/entity/Entity;)Z"
+            },
+            at = {
+                    @At(
+                            value = "CONSTANT",
+                            args = "intValue=64"
+                    ),
+                    @At(
+                            value = "CONSTANT",
+                            args = "intValue=32"
+                    ),
+                    @At(
+                            value = "CONSTANT",
+                            args = "intValue=16"
+                    )
+            }
+    )
+    private int tiny_terrors$int$modifyTeleportRange(int original) {
+        return isBaby() ? (int) (original * config.get().endermanConfig.teleportRangeMultiplier) : original;
     }
 
 
