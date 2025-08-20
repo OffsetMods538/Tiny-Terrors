@@ -39,7 +39,7 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
     }
 
     @Unique
-    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.ENDERMAN.getDimensions().scaled(0.5F).withEyeHeight(1.3F);
+    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.ENDERMAN.getDimensions().scaled(0.6F).withEyeHeight(1.3F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
