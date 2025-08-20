@@ -14,6 +14,7 @@ public final class ModConfig implements Config {
 
     public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
     public BabyEndermanConfig endermanConfig = new BabyEndermanConfig();
+    public BabySkeletonConfig skeletonConfig = new BabySkeletonConfig();
 
     public static class BaseBabyMobConfig {
         @Comment("Default: 0.5")
@@ -54,6 +55,11 @@ public final class ModConfig implements Config {
         public boolean canPickUpBlocks = false;
         @Comment("Default: 0.5")
         public double teleportRangeMultiplier = 0.5;
+    }
+
+    public static class BabySkeletonConfig extends BaseBabyMobConfig {
+        @Comment("Default: 0.5")
+        public double speedMultiplier = 0.5;
     }
 
 

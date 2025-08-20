@@ -5,6 +5,7 @@
   "mixins": [
     "entity.CreeperEntityMixin",
     "entity.EndermanEntityMixin",
+    "entity.SkeletonEntityMixin",
     "entity.ai.CreeperIgniteGoalMixin",
     "entity.dummy.DummyLivingEntityMixin",
     "entity.dummy.DummyMobEntityMixin"
