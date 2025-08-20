@@ -3,6 +3,10 @@ package top.offsetmonkey538.tinyterrors;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -10,6 +14,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,5 +73,18 @@ public class TinyTerrors implements ModInitializer {
         if (config.shouldBeJockey(random)) makeJockey(entity, world, difficulty);
 
         return entityData;
+    }
+
+    public static void setBaby(MobEntity entity, boolean isBaby, TrackedData<Boolean> isBabyTracked, EntityAttributeModifier speedModifier) {
+        entity.getDataTracker().set(isBabyTracked, isBaby);
+
+        final World world = entity.getWorld();
+        if (world == null || world.isClient) return;
+
+        final EntityAttributeInstance movementSpeed = entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+        if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
+
+        movementSpeed.removeModifier(BABY_SPEED_MODIFIER_ID);
+        if (isBaby) movementSpeed.addTemporaryModifier(speedModifier);
     }
 }

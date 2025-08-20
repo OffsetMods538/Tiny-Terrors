@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.offsetmonkey538.tinyterrors.TinyTerrors;
 import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
 
 import static top.offsetmonkey538.tinyterrors.TinyTerrors.*;
@@ -37,7 +38,7 @@ public abstract class SkeletonEntityMixin extends DummyMobEntityMixin {
     }
 
     @Unique
-    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.SKELETON.getDimensions().scaled(0.5F).withEyeHeight(0.93F); // todo: eye height may be wrong?
+    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.SKELETON.getDimensions().scaled(0.5F).withEyeHeight(0.93F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
@@ -60,16 +61,7 @@ public abstract class SkeletonEntityMixin extends DummyMobEntityMixin {
     // Overrides from MobEntity
     @Override
     protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
-        this.getDataTracker().set(tiny_terrors$BABY, newValue);
-        
-        final World world = this.getWorld();
-        if (world == null || world.isClient) return;
-
-        final EntityAttributeInstance movementSpeed = this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
-        if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
-
-        movementSpeed.removeModifier(BABY_SPEED_MODIFIER_ID);
-        if (newValue) movementSpeed.addTemporaryModifier(tiny_terrors$BABY_SPEED_BONUS);
+        TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$BABY, tiny_terrors$BABY_SPEED_BONUS);
     }
 
     @Override
