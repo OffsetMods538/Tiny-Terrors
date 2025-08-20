@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
@@ -49,6 +50,9 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
             BABY_SPEED_MODIFIER_ID, config.get().endermanConfig.speedMultiplier, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
     );
 
+    @Unique
+    private Goal tiny_terros$pickUpBlockGoal;
+
     @Inject(
             method = "initDataTracker",
             at = @At("TAIL")
@@ -57,41 +61,15 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
         builder.add(tiny_terrors$BABY, false);
     }
 
-    /*
-    @Definition(id = "add", method = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V")
-    @Definition(id = "PickUpBlockGoal", type = EndermanEntity.PickUpBlockGoal.class)
-    @Expression("?.add(?, new PickUpBlockGoal(?))")
-    @WrapOperation(
-            method = "initGoals",
-            at = @At(
-                    value = "MIXINEXTRAS:EXPRESSION"
-            )
-    )
-    private void test(GoalSelector instance, int priority, Goal goal, Operation<Void> original) {
-        original.call(instance, priority, goal);
-    }
-     */
-    /*
-    @Definition(id = "PickUpBlockGoal", type = EndermanEntity.PickUpBlockGoal.class)
-    @Expression("new PickUpBlockGoal(?)")
-    @WrapOperation(
-            method = "initGoals",
-            at = @At(
-                    value = "MIXINEXTRAS:EXPRESSION"
-            )
-    )
-    private EndermanEntity.PickUpBlockGoal test(EndermanEntity enderman, Operation<EndermanEntity.PickUpBlockGoal> original) {
-        return original.call(enderman);
-    }
-     */
     @ModifyExpressionValue(
             method = "initGoals",
             at = @At(
                     value = "NEW",
-                    target = "(Lnet/minecraft/entity/mob/EndermanEntity;Lnet/minecraft/entity/mob/EndermanEntity;)Lnet/minecraft/entity/mob/EndermanEntity$PickUpBlockGoal;"
+                    target = "(Lnet/minecraft/entity/mob/EndermanEntity;)Lnet/minecraft/entity/mob/EndermanEntity$PickUpBlockGoal;"
             )
     )
-    private EndermanEntity.PickUpBlockGoal test(EndermanEntity.PickUpBlockGoal original) {
+    private @Coerce Goal tiny_terrors$capturePickUpBlockGoal(@Coerce Goal original) {
+        tiny_terros$pickUpBlockGoal = original;
         return original;
     }
 
@@ -104,7 +82,7 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
         final World world = this.getWorld();
         if (world == null || world.isClient) return;
 
-        //goalSelector.re;
+        if (newValue) goalSelector.remove(tiny_terros$pickUpBlockGoal);
 
         final EntityAttributeInstance movementSpeed = this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
         if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
