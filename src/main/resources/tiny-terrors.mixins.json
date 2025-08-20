@@ -3,9 +3,10 @@
   "package": "top.offsetmonkey538.tinyterrors.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "entity.skeleton.AbstractSkeletonEntityMixin",
     "entity.CreeperEntityMixin",
     "entity.EndermanEntityMixin",
-    "entity.SkeletonEntityMixin",
+    "entity.skeleton.SkeletonEntityMixin",
     "entity.ai.CreeperIgniteGoalMixin",
     "entity.dummy.DummyLivingEntityMixin",
     "entity.dummy.DummyMobEntityMixin"
