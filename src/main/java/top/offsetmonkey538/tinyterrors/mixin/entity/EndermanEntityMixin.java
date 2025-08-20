@@ -82,7 +82,7 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
         final World world = this.getWorld();
         if (world == null || world.isClient) return;
 
-        if (newValue) goalSelector.remove(tiny_terros$pickUpBlockGoal);
+        if (newValue && !config.get().endermanConfig.canPickUpBlocks) goalSelector.remove(tiny_terros$pickUpBlockGoal);
 
         final EntityAttributeInstance movementSpeed = this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
         if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
