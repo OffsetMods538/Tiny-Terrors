@@ -1,9 +1,7 @@
 package top.offsetmonkey538.tinyterrors.mixin.client.render;
 
 import net.minecraft.client.render.entity.AbstractSkeletonEntityRenderer;
-import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
@@ -11,12 +9,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithBabyModel;
 import top.offsetmonkey538.tinyterrors.client.render.ModEntityModelLayers;
-import top.offsetmonkey538.tinyterrors.mixin.client.render.dummy.DummyLivingEntityRendererMixin;
 
 @Mixin(AbstractSkeletonEntityRenderer.class)
 public abstract class AbstractSkeletonEntityRendererMixin implements EntityRendererWithBabyModel {

@@ -5,6 +5,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.CreeperEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,16 +14,14 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithBabyModel;
 import top.offsetmonkey538.tinyterrors.client.render.ModEntityModelLayers;
-import top.offsetmonkey538.tinyterrors.mixin.client.render.dummy.DummyLivingEntityRendererMixin;
 
 @Mixin(CreeperEntityRenderer.class)
-public abstract class CreeperEntityRendererMixin extends DummyLivingEntityRendererMixin {
+public abstract class CreeperEntityRendererMixin implements EntityRendererWithBabyModel {
 
     @Unique
     private CreeperEntityModel tiny_terrors$babyModel;
-    @Unique
-    private CreeperEntityModel tiny_terrors$normalModel;
 
     @Inject(
             method = "<init>",
@@ -30,12 +29,11 @@ public abstract class CreeperEntityRendererMixin extends DummyLivingEntityRender
     )
     private void tiny_terrors$initBabyModel(EntityRendererFactory.Context context, CallbackInfo ci) {
         tiny_terrors$babyModel = new CreeperEntityModel(context.getPart(ModEntityModelLayers.CREEPER_BABY));
-        tiny_terrors$normalModel = (CreeperEntityModel) this.model;
     }
 
+    @Unique
     @Override
-    protected void tiny_terrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
-        this.model = ((CreeperEntityRenderState) state).baby ? this.tiny_terrors$babyModel : this.tiny_terrors$normalModel;
-        super.tiny_terrors$render(state, matrices, vertexConsumers, light, original);
+    public EntityModel<?> tiny_terrors$getBabyModel() {
+        return tiny_terrors$babyModel;
     }
 }
