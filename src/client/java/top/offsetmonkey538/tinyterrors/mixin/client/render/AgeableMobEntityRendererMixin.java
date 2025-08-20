@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithBabyModel;
 
+// This is used for skeletons
 @SuppressWarnings("deprecation") // hopefully fine 😅
 @Mixin(AgeableMobEntityRenderer.class)
 public abstract class AgeableMobEntityRendererMixin {
