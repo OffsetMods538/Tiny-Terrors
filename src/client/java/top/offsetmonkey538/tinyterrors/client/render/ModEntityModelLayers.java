@@ -15,6 +15,8 @@ public final class ModEntityModelLayers {
 
     public static final EntityModelLayer ENDERMAN_BABY      = register("enderman_baby", "main",  EndermanEntityModel::getTexturedModelData,                         20.5f);
 
+    public static final EntityModelLayer SKELETON_BABY      = register("skeleton_baby", "main",  SkeletonEntityModel::getTexturedModelData,                         16);
+
     private static EntityModelLayer register(final String id, final String layerId, final EntityModelLayerRegistry.TexturedModelDataProvider baseProvider, final float headOffset) {
         final EntityModelLayer layer = new EntityModelLayer(id(id), layerId);
         final BabyModelTransformer modelTransformer = new BabyModelTransformer(true, headOffset, 0.0F, 2.0F, 2.0F, 24.0F, Set.of("head"));

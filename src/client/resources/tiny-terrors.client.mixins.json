@@ -3,6 +3,8 @@
   "package": "top.offsetmonkey538.tinyterrors.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "render.AbstractSkeletonEntityRendererMixin",
+    "render.AgeableMobEntityRendererMixin",
     "render.CreeperEntityRendererMixin",
     "render.EndermanEntityRendererMixin",
     "render.dummy.DummyLivingEntityRendererMixin",
