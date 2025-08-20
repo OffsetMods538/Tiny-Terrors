@@ -120,6 +120,7 @@ public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
     // Overrides from MobEntity
     @Override
     protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
+        if (newValue && !config.get().endermanConfig.canPickUpBlocks) goalSelector.remove(tiny_terros$pickUpBlockGoal);
         TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$BABY, tiny_terrors$BABY_SPEED_BONUS);
     }
 

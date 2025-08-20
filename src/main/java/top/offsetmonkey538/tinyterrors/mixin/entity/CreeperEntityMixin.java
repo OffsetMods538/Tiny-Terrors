@@ -81,6 +81,7 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     // Overrides from MobEntity
     @Override
     protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
+        if (newValue) this.fuseTime = config.get().creeperConfig.fuseTime;
         TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$BABY, tiny_terrors$BABY_SPEED_BONUS);
     }
 
