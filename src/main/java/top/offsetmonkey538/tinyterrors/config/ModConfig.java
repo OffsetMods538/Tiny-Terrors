@@ -15,31 +15,15 @@ public final class ModConfig implements Config {
     public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
     public BabyEndermanConfig endermanConfig = new BabyEndermanConfig();
 
-    public static class BabyMobConfig {
+    public static class BaseBabyMobConfig {
         @Comment("Default: 0.5")
-        public double speedMultiplier;
-
-        @Comment("Default: 0.5")
-        public double xpMultiplier;
+        public double xpMultiplier = 2.5;
 
         @Comment("Default: 0.05")
-        public double spawnChance;
+        public double spawnChance = 0.1;
 
         @Comment("Default: 0.05")
-        public double jockeySpawnChance;
-
-        public BabyMobConfig() {
-            this(0.5);
-        }
-        public BabyMobConfig(double speedMultiplier) {
-            this(speedMultiplier, 2.5, 0.1, 0.05);
-        }
-        public BabyMobConfig(double speedMultiplier, double xpMultiplier, double spawnChance, double jockeySpawnChance) {
-            this.speedMultiplier = speedMultiplier;
-            this.xpMultiplier = xpMultiplier;
-            this.spawnChance = spawnChance;
-            this.jockeySpawnChance = jockeySpawnChance;
-        }
+        public double jockeySpawnChance = 0.05;
 
         public boolean shouldBeBaby(final Random random) {
             return random.nextDouble() < spawnChance;
@@ -50,10 +34,9 @@ public final class ModConfig implements Config {
         }
     }
 
-    public static class BabyCreeperConfig extends BabyMobConfig {
-        public BabyCreeperConfig() {
-            super(0.75);
-        }
+    public static class BabyCreeperConfig extends BaseBabyMobConfig {
+        @Comment("Default: 0.75")
+        public double speedMultiplier = 0.75;
 
         @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 5")
         public int fuseTime = 5;
@@ -63,8 +46,9 @@ public final class ModConfig implements Config {
         public double igniteRadiusMultiplier = 0.5;
     }
 
-    public static class BabyEndermanConfig extends BabyMobConfig {
-
+    public static class BabyEndermanConfig extends BaseBabyMobConfig {
+        @Comment("Default: 0.5")
+        public double speedMultiplier = 0.5;
     }
 
 
