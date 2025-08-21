@@ -1,4 +1,4 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render.feature;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.feature;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;

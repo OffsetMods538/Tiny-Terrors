@@ -1,4 +1,4 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.skeleton;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.render.entity.AgeableMobEntityRenderer;

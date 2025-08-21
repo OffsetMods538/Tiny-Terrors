@@ -1,8 +1,6 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render.skeleton;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.skeleton;
 
-import net.minecraft.client.render.entity.BoggedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.BoggedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import org.jetbrains.annotations.NotNull;
@@ -15,27 +13,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.offsetmonkey538.tinyterrors.client.render.SkeletonEntityRenderer;
 import top.offsetmonkey538.tinyterrors.client.render.ModEntityModelLayers;
 
-@Mixin(BoggedEntityRenderer.class)
-public abstract class BoggedEntityRendererMixin implements SkeletonEntityRenderer {
+@Mixin(net.minecraft.client.render.entity.SkeletonEntityRenderer.class)
+public abstract class SkeletonEntityRendererMixin implements SkeletonEntityRenderer {
 
     @Unique
-    private BoggedEntityModel tiny_terrors$babyModel;
+    private SkeletonEntityModel<?> tiny_terrors$babyModel;
     @Unique
     private SkeletonEntityModel<?> tiny_terrors$babyInnerArmorLayerModel;
     @Unique
     private SkeletonEntityModel<?> tiny_terrors$babyOuterArmorLayerModel;
-    @Unique
-    private SkeletonEntityModel<?> tiny_terrors$babyOverlayModel;
 
     @Inject(
             method = "<init>",
             at = @At("TAIL")
     )
     private void tiny_terrors$initBabyModel(EntityRendererFactory.Context context, CallbackInfo ci) {
-        tiny_terrors$babyModel = new BoggedEntityModel(context.getPart(ModEntityModelLayers.BOGGED_BABY));
-        tiny_terrors$babyInnerArmorLayerModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.BOGGED_BABY_INNER_ARMOR));
-        tiny_terrors$babyOuterArmorLayerModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.BOGGED_BABY_OUTER_ARMOR));
-        tiny_terrors$babyOverlayModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.BOGGED_BABY_OUTER));
+        tiny_terrors$babyModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.SKELETON_BABY));
+        tiny_terrors$babyInnerArmorLayerModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.SKELETON_BABY_INNER_ARMOR));
+        tiny_terrors$babyOuterArmorLayerModel = new SkeletonEntityModel<>(context.getPart(ModEntityModelLayers.SKELETON_BABY_OUTER_ARMOR));
     }
 
     @Unique
@@ -56,6 +51,6 @@ public abstract class BoggedEntityRendererMixin implements SkeletonEntityRendere
     @Unique
     @Override
     public @Nullable SkeletonEntityModel<?> tiny_terrors$getOverlayModel() {
-        return tiny_terrors$babyOverlayModel;
+        return null;
     }
 }

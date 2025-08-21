@@ -3,18 +3,18 @@
   "package": "top.offsetmonkey538.tinyterrors.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "render.AgeableMobEntityRendererMixin",
-    "render.CreeperEntityRendererMixin",
-    "render.EndermanEntityRendererMixin",
-    "render.LivingEntityRendererMixin",
+    "render.entity.skeleton.AgeableMobEntityRendererMixin",
+    "render.entity.CreeperEntityRendererMixin",
+    "render.entity.EndermanEntityRendererMixin",
+    "render.entity.LivingEntityRendererMixin",
     "render.entity.model.EntityModelsMixin",
-    "render.feature.ArmorFeatureRendererMixin",
-    "render.feature.CreeperChargeFeatureRendererMixin",
-    "render.feature.EnergySwirlOverlayFeatureRendererMixin",
-    "render.feature.FeatureRendererAccess",
-    "render.feature.SkeletonOverlayFeatureRendererMixin",
-    "render.skeleton.BoggedEntityRendererMixin",
-    "render.skeleton.SkeletonEntityRendererMixin"
+    "render.entity.feature.ArmorFeatureRendererMixin",
+    "render.entity.feature.CreeperChargeFeatureRendererMixin",
+    "render.entity.feature.EnergySwirlOverlayFeatureRendererMixin",
+    "render.entity.feature.FeatureRendererAccess",
+    "render.entity.feature.SkeletonOverlayFeatureRendererMixin",
+    "render.entity.skeleton.BoggedEntityRendererMixin",
+    "render.entity.skeleton.SkeletonEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

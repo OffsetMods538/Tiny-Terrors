@@ -1,9 +1,8 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render.feature;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.feature;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.entity.feature.SkeletonOverlayFeatureRenderer;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import net.minecraft.client.render.entity.state.SkeletonEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;

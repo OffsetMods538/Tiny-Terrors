@@ -1,4 +1,4 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render.feature;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.feature;
 
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;

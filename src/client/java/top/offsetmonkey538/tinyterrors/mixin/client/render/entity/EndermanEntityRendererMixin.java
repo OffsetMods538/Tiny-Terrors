@@ -1,14 +1,9 @@
-package top.offsetmonkey538.tinyterrors.mixin.client.render;
+package top.offsetmonkey538.tinyterrors.mixin.client.render.entity;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EndermanEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.state.EndermanEntityRenderState;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
