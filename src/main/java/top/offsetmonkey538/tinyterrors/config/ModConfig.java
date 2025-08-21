@@ -15,6 +15,7 @@ public final class ModConfig implements Config {
     public BabyCreeperConfig creeperConfig = new BabyCreeperConfig();
     public BabyEndermanConfig endermanConfig = new BabyEndermanConfig();
     public BabyAbstractSkeletonConfig skeletonConfig = new BabyAbstractSkeletonConfig();
+    public BabyAbstractSkeletonConfig boggedConfig = new BabyAbstractSkeletonConfig();
 
     public static class BaseBabyMobConfig {
         @Comment("Default: 0.5")

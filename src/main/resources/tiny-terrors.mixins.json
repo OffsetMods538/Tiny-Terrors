@@ -3,13 +3,14 @@
   "package": "top.offsetmonkey538.tinyterrors.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "entity.skeleton.AbstractSkeletonEntityMixin",
     "entity.CreeperEntityMixin",
     "entity.EndermanEntityMixin",
-    "entity.skeleton.SkeletonEntityMixin",
     "entity.ai.CreeperIgniteGoalMixin",
     "entity.dummy.DummyLivingEntityMixin",
-    "entity.dummy.DummyMobEntityMixin"
+    "entity.dummy.DummyMobEntityMixin",
+    "entity.skeleton.AbstractSkeletonEntityMixin",
+    "entity.skeleton.BoggedEntityMixin",
+    "entity.skeleton.SkeletonEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
