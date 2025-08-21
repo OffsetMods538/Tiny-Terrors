@@ -1,9 +1,7 @@
 package top.offsetmonkey538.tinyterrors.mixin.client.render.entity.skeleton;
 
-import net.minecraft.client.render.entity.BoggedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.StrayEntityRenderer;
-import net.minecraft.client.render.entity.model.BoggedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import org.jetbrains.annotations.NotNull;

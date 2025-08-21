@@ -26,11 +26,6 @@ jobs:
         with:
           cache-read-only: false
 
-      - name: Generate resources with Gradle
-        run: ./gradlew runDatagen
-        env:
-          DISABLE_PROPERTIES_UPDATE: true
-
       - name: Build with Gradle
         run: ./gradlew build
         env:

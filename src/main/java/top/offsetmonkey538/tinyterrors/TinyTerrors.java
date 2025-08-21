@@ -1,6 +1,5 @@
 package top.offsetmonkey538.tinyterrors;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeInstance;

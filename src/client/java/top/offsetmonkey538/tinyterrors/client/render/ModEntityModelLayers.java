@@ -3,7 +3,6 @@ package top.offsetmonkey538.tinyterrors.client.render;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.TexturedModelData;
-import net.minecraft.client.render.entity.StrayEntityRenderer;
 import net.minecraft.client.render.entity.model.*;
 import top.offsetmonkey538.tinyterrors.mixin.client.render.entity.model.EntityModelsMixin;
 

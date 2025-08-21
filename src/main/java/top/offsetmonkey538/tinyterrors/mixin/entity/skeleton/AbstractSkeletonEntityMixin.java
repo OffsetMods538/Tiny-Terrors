@@ -2,12 +2,9 @@ package top.offsetmonkey538.tinyterrors.mixin.entity.skeleton;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.BowAttackGoal;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
@@ -16,7 +13,6 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,10 +37,6 @@ public abstract class AbstractSkeletonEntityMixin extends DummyMobEntityMixin {
 
     @Shadow
     public abstract void updateAttackType();
-
-    @Shadow
-    @Final
-    private BowAttackGoal<AbstractSkeletonEntity> bowAttackGoal;
 
     @Unique
     private static final Set<String> tiny_terrors$unimplementedEntities = new HashSet<>();

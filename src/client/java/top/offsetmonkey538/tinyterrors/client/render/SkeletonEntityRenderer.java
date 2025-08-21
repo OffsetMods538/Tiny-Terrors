@@ -1,6 +1,5 @@
 package top.offsetmonkey538.tinyterrors.client.render;
 
-import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
