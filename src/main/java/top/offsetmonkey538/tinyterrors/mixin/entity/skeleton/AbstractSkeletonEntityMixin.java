@@ -1,10 +1,13 @@
 package top.offsetmonkey538.tinyterrors.mixin.entity.skeleton;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.ai.goal.BowAttackGoal;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
@@ -13,13 +16,14 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.offsetmonkey538.tinyterrors.TinyTerrors;
-import top.offsetmonkey538.tinyterrors.config.ModConfig;
 import top.offsetmonkey538.tinyterrors.entity.EntityWithBaby;
 import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
 
@@ -35,12 +39,19 @@ public abstract class AbstractSkeletonEntityMixin extends DummyMobEntityMixin {
         super(type, world);
     }
 
-    // Default one for skeleton entities that don't provide their own
+    @Shadow
+    public abstract void updateAttackType();
+
+    @Shadow
+    @Final
+    private BowAttackGoal<AbstractSkeletonEntity> bowAttackGoal;
+
+    @Unique
+    private static final Set<String> tiny_terrors$unimplementedEntities = new HashSet<>();
+
     @Unique
     @Nullable
     private EntityWithBaby tiny_terrors$asEntityWithBaby = null;
-    @Unique
-    private static final Set<String> tiny_terrors$unimplementedEntities = new HashSet<>();
 
     @Inject(
             method = "<init>",
@@ -64,6 +75,20 @@ public abstract class AbstractSkeletonEntityMixin extends DummyMobEntityMixin {
         LOGGER.error("This error will not be shown again for this entity.");
     }
 
+    @ModifyReturnValue(
+            method = {
+                    "getHardAttackInterval",
+                    "getRegularAttackInterval"
+            },
+            at = @At(value = "RETURN")
+    )
+    private int tiny_terrors$modifyAttackIntervalForBabyVariants(int original) {
+        if (tiny_terrors$asEntityWithBaby == null || !this.isBaby()) return original;
+
+        return (int) (original * tiny_terrors$asEntityWithBaby.tiny_terrors$getConfig().bowAttackIntervalMultiplier);
+    }
+
+
     // Overrides from MobEntity
     @Override
     protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
@@ -72,6 +97,8 @@ public abstract class AbstractSkeletonEntityMixin extends DummyMobEntityMixin {
             return;
         }
         TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$asEntityWithBaby.tiny_terrors$getTrackedData(), tiny_terrors$asEntityWithBaby.tiny_terrors$getSpeedModifier());
+
+        this.updateAttackType();
     }
 
     @Override

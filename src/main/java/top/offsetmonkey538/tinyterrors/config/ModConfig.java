@@ -63,6 +63,9 @@ public final class ModConfig implements Config {
     public static class BabyAbstractSkeletonConfig extends BaseBabyMobConfig {
         @Comment("Default: 0.5")
         public double speedMultiplier = 0.5;
+
+        @Comment("Default: 0.5")
+        public double bowAttackIntervalMultiplier = 0.5;
     }
 
 
