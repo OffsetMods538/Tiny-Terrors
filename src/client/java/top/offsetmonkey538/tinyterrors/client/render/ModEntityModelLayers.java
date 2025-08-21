@@ -35,16 +35,19 @@ public final class ModEntityModelLayers {
     public static final EntityModelLayer STRAY_BABY_OUTER_ARMOR              = register("stray_baby",           "outer_armor", () -> OUTER_ARMOR,                                                                            16.0f);
     public static final EntityModelLayer STRAY_BABY_OUTER                    = register("stray_baby",           "outer",       () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(0.25F), 0.0F), 64, 32), 16.0f);
 
-    public static final EntityModelLayer WITHER_SKELETON_BABY                = register("wither_skeleton_baby", "main",        () -> SkeletonEntityModel.getTexturedModelData().transform(ModelTransformer.scaling(1.2F)),   16.0f);
-    public static final EntityModelLayer WITHER_SKELETON_BABY_INNER_ARMOR    = register("wither_skeleton_baby", "inner_armor", () -> INNER_ARMOR.transform(ModelTransformer.scaling(1.2F)),                                  16.0f);
-    public static final EntityModelLayer WITHER_SKELETON_BABY_OUTER_ARMOR    = register("wither_skeleton_baby", "outer_armor", () -> OUTER_ARMOR.transform(ModelTransformer.scaling(1.2F)),                                  16.0f);
+    public static final EntityModelLayer WITHER_SKELETON_BABY                = register("wither_skeleton_baby", "main",        SkeletonEntityModel::getTexturedModelData,                                                    16.0f, ModelTransformer.scaling(1.2f));
+    public static final EntityModelLayer WITHER_SKELETON_BABY_INNER_ARMOR    = register("wither_skeleton_baby", "inner_armor", () -> INNER_ARMOR,                                                                            16.0f, ModelTransformer.scaling(1.2f));
+    public static final EntityModelLayer WITHER_SKELETON_BABY_OUTER_ARMOR    = register("wither_skeleton_baby", "outer_armor", () -> OUTER_ARMOR,                                                                            16.0f, ModelTransformer.scaling(1.2f));
 
 
     private static EntityModelLayer register(final String id, final String layerId, final EntityModelLayerRegistry.TexturedModelDataProvider baseProvider, final float headOffset) {
+        return register(id, layerId, baseProvider, headOffset, ModelTransformer.NO_OP);
+    }
+    private static EntityModelLayer register(final String id, final String layerId, final EntityModelLayerRegistry.TexturedModelDataProvider baseProvider, final float headOffset, ModelTransformer transformer) {
         final EntityModelLayer layer = new EntityModelLayer(id(id), layerId);
         final BabyModelTransformer modelTransformer = new BabyModelTransformer(true, headOffset, 0.0F, 2.0F, 2.0F, 24.0F, Set.of("head"));
 
-        EntityModelLayerRegistry.registerModelLayer(layer, () -> baseProvider.createModelData().transform(modelTransformer));
+        EntityModelLayerRegistry.registerModelLayer(layer, () -> baseProvider.createModelData().transform(modelTransformer).transform(transformer));
 
         return layer;
     }

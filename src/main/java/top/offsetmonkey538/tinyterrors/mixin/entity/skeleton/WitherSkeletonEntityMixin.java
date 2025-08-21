@@ -29,7 +29,7 @@ public abstract class WitherSkeletonEntityMixin extends DummyMobEntityMixin impl
     }
 
     @Unique
-    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.BOGGED.getDimensions().scaled(0.5F).withEyeHeight(0.93F);
+    private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.WITHER_SKELETON.getDimensions().scaled(0.5F).withEyeHeight(1.118F);
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
