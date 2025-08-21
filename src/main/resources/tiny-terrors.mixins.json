@@ -11,7 +11,8 @@
     "entity.skeleton.AbstractSkeletonEntityMixin",
     "entity.skeleton.BoggedEntityMixin",
     "entity.skeleton.SkeletonEntityMixin",
-    "entity.skeleton.StrayEntityMixin"
+    "entity.skeleton.StrayEntityMixin",
+    "entity.skeleton.WitherSkeletonEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

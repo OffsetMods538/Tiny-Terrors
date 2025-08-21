@@ -17,6 +17,7 @@ public final class ModConfig implements Config {
     public BabyAbstractSkeletonConfig skeletonConfig = new BabyAbstractSkeletonConfig();
     public BabyAbstractSkeletonConfig boggedConfig = new BabyAbstractSkeletonConfig();
     public BabyAbstractSkeletonConfig strayConfig = new BabyAbstractSkeletonConfig();
+    public BabyAbstractSkeletonConfig witherSkeletonConfig = new BabyAbstractSkeletonConfig();
 
     public static class BaseBabyMobConfig {
         @Comment("Default: 0.5")
