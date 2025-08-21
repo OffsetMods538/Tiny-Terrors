@@ -24,7 +24,7 @@ public abstract class SkeletonEntityRendererMixin implements SkeletonEntityRende
     private SkeletonEntityModel<?> tiny_terrors$babyOuterArmorLayerModel;
 
     @Inject(
-            method = "<init>",
+            method = "<init>*",
             at = @At("TAIL")
     )
     private void tiny_terrors$initBabyModel(EntityRendererFactory.Context context, CallbackInfo ci) {

@@ -1,5 +1,6 @@
 package top.offsetmonkey538.tinyterrors.mixin.entity.skeleton;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
@@ -47,6 +48,19 @@ public abstract class BoggedEntityMixin extends DummyMobEntityMixin implements E
     )
     private void tiny_terrors$addBabyData(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(tiny_terrors$BABY, false);
+    }
+
+    @ModifyReturnValue(
+            method = {
+                    "getHardAttackInterval",
+                    "getRegularAttackInterval"
+            },
+            at = @At(value = "RETURN")
+    )
+    private int tiny_terrors$modifyAttackIntervalForBabyVariants(int original) {
+        if (!this.isBaby()) return original;
+
+        return (int) (original * tiny_terrors$getConfig().bowAttackIntervalMultiplier);
     }
 
 
