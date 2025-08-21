@@ -1,12 +1,11 @@
 package top.offsetmonkey538.tinyterrors.mixin.client.render.feature;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithArmorLayersWithBabyModel;
+import top.offsetmonkey538.tinyterrors.client.render.SkeletonEntityRenderer;
 
 @Mixin(ArmorFeatureRenderer.class)
 public abstract class ArmorFeatureRendererMixin {
@@ -19,9 +18,9 @@ public abstract class ArmorFeatureRendererMixin {
             )
     )
     private BipedEntityModel<?> tiny_terrors$useBabyInnerArmorLayer(BipedEntityModel<?> original) {
-        if (!(((FeatureRendererAccess) this).getContext() instanceof EntityRendererWithArmorLayersWithBabyModel withBabyModel)) return original;
+        if (!(((FeatureRendererAccess) this).getContext() instanceof SkeletonEntityRenderer skeletonRenderer)) return original;
 
-        return (BipedEntityModel<?>) withBabyModel.tiny_terrors$getInnerLayerModel();
+        return skeletonRenderer.tiny_terrors$getInnerArmorModel();
     }
 
     @ModifyExpressionValue(
@@ -32,8 +31,8 @@ public abstract class ArmorFeatureRendererMixin {
             )
     )
     private BipedEntityModel<?> tiny_terrors$useBabyOuterArmorLayer(BipedEntityModel<?> original) {
-        if (!(((FeatureRendererAccess) this).getContext() instanceof EntityRendererWithArmorLayersWithBabyModel withBabyModel)) return original;
+        if (!(((FeatureRendererAccess) this).getContext() instanceof SkeletonEntityRenderer skeletonRenderer)) return original;
 
-        return (BipedEntityModel<?>) withBabyModel.tiny_terrors$getOuterLayerModel();
+        return skeletonRenderer.tiny_terrors$getOuterArmorModel();
     }
 }

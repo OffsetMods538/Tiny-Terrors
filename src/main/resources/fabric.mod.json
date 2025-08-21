@@ -38,10 +38,5 @@
 		"fabric-api": "*",
 		"minecraft": "${supportedMinecraftVersions}",
 		"java": ">=21"
-	},
-    "custom": {
-        "loom:injected_interfaces": {
-            "net/minecraft/class_9990": ["top/offsetmonkey538/tinyterrors/client/render/EntityRendererWithBabyModel"]
-        }
-    }
+	}
 }

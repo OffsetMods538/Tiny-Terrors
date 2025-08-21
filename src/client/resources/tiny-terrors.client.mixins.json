@@ -12,6 +12,8 @@
     "render.feature.CreeperChargeFeatureRendererMixin",
     "render.feature.EnergySwirlOverlayFeatureRendererMixin",
     "render.feature.FeatureRendererAccess",
+    "render.feature.SkeletonOverlayFeatureRendererMixin",
+    "render.skeleton.BoggedEntityRendererMixin",
     "render.skeleton.SkeletonEntityRendererMixin"
   ],
   "injectors": {
