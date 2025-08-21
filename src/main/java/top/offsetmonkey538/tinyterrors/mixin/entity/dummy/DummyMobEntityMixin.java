@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
@@ -32,6 +33,13 @@ public abstract class DummyMobEntityMixin extends DummyLivingEntityMixin {
         super(type, world);
     }
 
+    // This is only for Stray to implement as it doesn't implement initDataTracker
+    @WrapMethod(
+            method = "initDataTracker"
+    )
+    protected void tiny_terrors$initDataTracker(DataTracker.Builder builder, Operation<Void> original) {
+        original.call(builder);
+    }
     @WrapMethod(
             method = "setBaby"
     )

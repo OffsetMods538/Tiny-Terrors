@@ -10,7 +10,8 @@
     "entity.dummy.DummyMobEntityMixin",
     "entity.skeleton.AbstractSkeletonEntityMixin",
     "entity.skeleton.BoggedEntityMixin",
-    "entity.skeleton.SkeletonEntityMixin"
+    "entity.skeleton.SkeletonEntityMixin",
+    "entity.skeleton.StrayEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

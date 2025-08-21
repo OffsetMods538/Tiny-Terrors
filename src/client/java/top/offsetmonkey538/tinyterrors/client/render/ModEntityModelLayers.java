@@ -3,6 +3,7 @@ package top.offsetmonkey538.tinyterrors.client.render;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.TexturedModelData;
+import net.minecraft.client.render.entity.StrayEntityRenderer;
 import net.minecraft.client.render.entity.model.*;
 import top.offsetmonkey538.tinyterrors.mixin.client.render.entity.model.EntityModelsMixin;
 
@@ -15,19 +16,24 @@ public final class ModEntityModelLayers {
     private static final EntityModelLayerRegistry.TexturedModelDataProvider OUTER_ARMOR = () -> TexturedModelData.of(ArmorEntityModel.getModelData(EntityModelsMixin.getARMOR_DILATION()), 64, 32);
 
 
-    public static final EntityModelLayer CREEPER_BABY              = register("creeper_baby",  "main",        () -> CreeperEntityModel.getTexturedModelData(Dilation.NONE),                                14.0f);
-    public static final EntityModelLayer CREEPER_BABY_ARMOR        = register("creeper_baby",  "armor",       () -> CreeperEntityModel.getTexturedModelData(new Dilation(2.0F)),                           14.0f);
+    public static final EntityModelLayer CREEPER_BABY              = register("creeper_baby",  "main",        () -> CreeperEntityModel.getTexturedModelData(Dilation.NONE),                                 14.0f);
+    public static final EntityModelLayer CREEPER_BABY_ARMOR        = register("creeper_baby",  "armor",       () -> CreeperEntityModel.getTexturedModelData(new Dilation(2.0F)),                            14.0f);
 
-    public static final EntityModelLayer ENDERMAN_BABY             = register("enderman_baby", "main",        EndermanEntityModel::getTexturedModelData,                                                   20.5f);
+    public static final EntityModelLayer ENDERMAN_BABY             = register("enderman_baby", "main",        EndermanEntityModel::getTexturedModelData,                                                    20.5f);
 
-    public static final EntityModelLayer SKELETON_BABY             = register("skeleton_baby", "main",        SkeletonEntityModel::getTexturedModelData,                                                   16.0f);
-    public static final EntityModelLayer SKELETON_BABY_INNER_ARMOR = register("skeleton_baby", "inner_armor", INNER_ARMOR,                                                                                 16.0f);
-    public static final EntityModelLayer SKELETON_BABY_OUTER_ARMOR = register("skeleton_baby", "outer_armor", OUTER_ARMOR,                                                                                 16.0f);
+    public static final EntityModelLayer SKELETON_BABY             = register("skeleton_baby", "main",        SkeletonEntityModel::getTexturedModelData,                                                    16.0f);
+    public static final EntityModelLayer SKELETON_BABY_INNER_ARMOR = register("skeleton_baby", "inner_armor", INNER_ARMOR,                                                                                  16.0f);
+    public static final EntityModelLayer SKELETON_BABY_OUTER_ARMOR = register("skeleton_baby", "outer_armor", OUTER_ARMOR,                                                                                  16.0f);
 
-    public static final EntityModelLayer BOGGED_BABY               = register("bogged_baby",   "main",        BoggedEntityModel::getTexturedModelData,                                                     16.0f);
-    public static final EntityModelLayer BOGGED_BABY_INNER_ARMOR   = register("bogged_baby",   "inner_armor", INNER_ARMOR,                                                                                 16.0f);
-    public static final EntityModelLayer BOGGED_BABY_OUTER_ARMOR   = register("bogged_baby",   "outer_armor", OUTER_ARMOR,                                                                                 16.0f);
-    public static final EntityModelLayer BOGGED_BABY_OUTER         = register("bogged_baby",   "outer",       () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(0.2F), 0.0F), 64, 32), 16.0f);
+    public static final EntityModelLayer BOGGED_BABY               = register("bogged_baby",   "main",        BoggedEntityModel::getTexturedModelData,                                                      16.0f);
+    public static final EntityModelLayer BOGGED_BABY_INNER_ARMOR   = register("bogged_baby",   "inner_armor", INNER_ARMOR,                                                                                  16.0f);
+    public static final EntityModelLayer BOGGED_BABY_OUTER_ARMOR   = register("bogged_baby",   "outer_armor", OUTER_ARMOR,                                                                                  16.0f);
+    public static final EntityModelLayer BOGGED_BABY_OUTER         = register("bogged_baby",   "outer",       () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(0.2F), 0.0F), 64, 32),  16.0f);
+
+    public static final EntityModelLayer STRAY_BABY                = register("stray_baby",    "main",        SkeletonEntityModel::getTexturedModelData,                                                    16.0f);
+    public static final EntityModelLayer STRAY_BABY_INNER_ARMOR    = register("stray_baby",    "inner_armor", INNER_ARMOR,                                                                                  16.0f);
+    public static final EntityModelLayer STRAY_BABY_OUTER_ARMOR    = register("stray_baby",    "outer_armor", OUTER_ARMOR,                                                                                  16.0f);
+    public static final EntityModelLayer STRAY_BABY_OUTER          = register("stray_baby",    "outer",       () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(0.25F), 0.0F), 64, 32), 16.0f);
 
 
     private static EntityModelLayer register(final String id, final String layerId, final EntityModelLayerRegistry.TexturedModelDataProvider baseProvider, final float headOffset) {
