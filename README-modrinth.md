@@ -2,6 +2,8 @@
 [![discord-singular](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.offsetmonkey538.top/)
 [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/tiny-terrors)
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/XxkAvAz_-FI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 You thought baby zombies were bad enough? Wait until you get instantly blown up by a baby creeper
 
 Adds baby versions of creepers, endermen, skeletons, stray, bogged and wither skeletons.  

@@ -180,7 +180,7 @@ modrinth {
 
 
 	// Project info
-	syncBodyFrom = rootProject.file("README.md").text
+	syncBodyFrom = rootProject.file("README-modrinth.md").text
 	def changelogEnv = System.getenv("VERSION_CHANGELOG")
 	if (changelogEnv != null) changelog = changelogEnv
 
