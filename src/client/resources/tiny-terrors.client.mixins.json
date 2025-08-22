@@ -12,7 +12,6 @@
     "render.entity.feature.FeatureRendererAccess",
     "render.entity.feature.SkeletonOverlayFeatureRendererMixin",
     "render.entity.model.EntityModelsMixin",
-    "render.entity.skeleton.AgeableMobEntityRendererMixin",
     "render.entity.skeleton.BoggedEntityRendererMixin",
     "render.entity.skeleton.SkeletonEntityRendererMixin",
     "render.entity.skeleton.StrayEntityRendererMixin",

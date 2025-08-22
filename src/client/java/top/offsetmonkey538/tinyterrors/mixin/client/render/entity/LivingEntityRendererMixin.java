@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithBabyModel;
 
-// This is used for endermen and creepers
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
 
@@ -35,14 +34,13 @@ public abstract class LivingEntityRendererMixin {
         this.tiny_terrors$normalModel = model;
     }
 
-    @WrapMethod(
-            method = "render(Lnet/minecraft/client/render/entity/state/EntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
+    @Inject(
+            method = "render(Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+            at = @At("HEAD")
     )
-    private void tiny_terrors$render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Operation<Void> original) {
-        if (this instanceof EntityRendererWithBabyModel modelGetter) {
-            this.model = ((LivingEntityRenderState) state).baby ? modelGetter.tiny_terrors$getBabyModel() : this.tiny_terrors$normalModel;
-        }
+    private void tiny_terrors$render(LivingEntityRenderState state, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
+        if (!(this instanceof EntityRendererWithBabyModel modelGetter)) return;
 
-        original.call(state, matrices, vertexConsumers, light);
+        this.model = state.baby ? modelGetter.tiny_terrors$getBabyModel() : this.tiny_terrors$normalModel;
     }
 }
