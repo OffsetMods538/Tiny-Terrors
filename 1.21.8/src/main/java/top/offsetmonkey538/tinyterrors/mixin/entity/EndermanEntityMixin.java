@@ -1,0 +1,28 @@
+package top.offsetmonkey538.tinyterrors.mixin.entity;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.minecraft.entity.*;
+import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import org.spongepowered.asm.mixin.Mixin;
+import top.offsetmonkey538.tinyterrors.mixin.entity.dummy.DummyMobEntityMixin;
+
+import static top.offsetmonkey538.tinyterrors.common.TinyTerrors.*;
+
+@Mixin(EndermanEntity.class)
+public abstract class EndermanEntityMixin extends DummyMobEntityMixin {
+    @Override
+    protected void tiny_terrors$writeCustomData(WriteView view, Operation<Void> original) {
+        view.putBoolean(IS_BABY_KEY, this.isBaby());
+
+        super.tiny_terrors$writeCustomData(view, original);
+    }
+
+    @Override
+    protected void tiny_terrors$readCustomData(ReadView view, Operation<Void> original) {
+        this.setBaby(view.getBoolean(IS_BABY_KEY, false));
+
+        super.tiny_terrors$readCustomData(view, original);
+    }
+}

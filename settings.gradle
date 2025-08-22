@@ -8,3 +8,10 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+rootProject.name = "tiny-terrors"
+
+
+include "common"
+
+include "1.21.8"

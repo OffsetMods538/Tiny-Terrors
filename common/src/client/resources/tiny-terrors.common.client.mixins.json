@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "top.offsetmonkey538.tinyterrors.common.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "render.entity.CreeperEntityRendererMixin",
+    "render.entity.EndermanEntityRendererMixin",
+    "render.entity.feature.FeatureRendererAccess",
+    "render.entity.model.EntityModelsMixin",
+    "render.entity.skeleton.BoggedEntityRendererMixin",
+    "render.entity.skeleton.SkeletonEntityRendererMixin",
+    "render.entity.skeleton.StrayEntityRendererMixin",
+    "render.entity.skeleton.WitherSkeletonEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

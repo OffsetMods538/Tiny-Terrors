@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "top.offsetmonkey538.tinyterrors.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "render.entity.LivingEntityRendererMixin",
+    "render.entity.feature.ArmorFeatureRendererMixin",
+    "render.entity.feature.CreeperChargeFeatureRendererMixin",
+    "render.entity.feature.EnergySwirlOverlayFeatureRendererMixin",
+    "render.entity.feature.SkeletonOverlayFeatureRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
