@@ -118,7 +118,7 @@ dependencies {
 	// includeModImplementation fabricApi.module("fabric-api-base", project.fapi_version)
 
 	// OffsetConfig538
-	modImplementation "top.offsetmonkey538.offsetconfig538:offsetconfig538:${project.offsetconfig538_version}"
+	includeImplementation "top.offsetmonkey538.offsetconfig538:offsetconfig538:${project.offsetconfig538_version}"
 }
 
 processResources {
