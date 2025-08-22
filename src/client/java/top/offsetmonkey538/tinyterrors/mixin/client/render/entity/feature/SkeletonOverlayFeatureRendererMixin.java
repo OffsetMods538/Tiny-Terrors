@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import top.offsetmonkey538.tinyterrors.client.render.SkeletonEntityRenderer;
 
+// TODO: separate into different subprojects for multiversion
 @Mixin(SkeletonOverlayFeatureRenderer.class)
 public abstract class SkeletonOverlayFeatureRendererMixin {
 

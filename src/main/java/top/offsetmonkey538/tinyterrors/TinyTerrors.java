@@ -23,6 +23,7 @@ import top.offsetmonkey538.offsetconfig538.api.config.ConfigManager;
 
 import java.util.List;
 
+// TODO: all the main source set mixins need to have data saving and loading moved to multiversion subprojects, but otherwise at least MCDev doesn't seem to complain much?
 public class TinyTerrors implements ModInitializer {
 	public static final String MOD_ID = "tiny-terrors";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -80,6 +81,7 @@ public class TinyTerrors implements ModInitializer {
         final World world = entity.getWorld();
         if (world == null || world.isClient) return;
 
+        // todo: Really, that was renamed? I guess also need a multiversion service thing for getting the attribute
         final EntityAttributeInstance movementSpeed = entity.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
         if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
 
