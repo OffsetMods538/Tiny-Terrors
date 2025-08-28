@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "tiny-terrors",
+	"version": "${modVersion}",
+	"name": "Tiny Terrors",
+	"description": "Adds baby monsters",
+	"authors": [
+		"OffsetMonkey538"
+	],
+	"contact": {
+		"sources": "https://github.com/OffsetMods538/Tiny-Terrors",
+		"issues": "https://github.com/OffsetMods538/Tiny-Terrors/issues",
+		"homepage": "https://modrinth.com/mod/tiny-terrors"
+	},
+	"license": "MIT",
+	"icon": "assets/tiny-terrors/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+          "top.offsetmonkey538.tinyterrors.TinyTerrorsClient"
+		]
+	},
+	"mixins": [
+		"tiny-terrors.mixins.json",
+		{
+			"config": "tiny-terrors.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"accessWidener": "tiny-terrors.accesswidener",
+	"depends": {
+		"fabric-api": "*",
+		"minecraft": "${supportedMinecraftVersions}",
+		"java": ">=21"
+	}
+}
