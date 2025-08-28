@@ -12,9 +12,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.offsetmonkey538.tinyterrors.common.client.render.EntityRendererWithBabyModel;
+import top.offsetmonkey538.tinyterrors.client.render.EntityRendererWithBabyModel;
 
-// TODO: separate into different subprojects for multiversion
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
 

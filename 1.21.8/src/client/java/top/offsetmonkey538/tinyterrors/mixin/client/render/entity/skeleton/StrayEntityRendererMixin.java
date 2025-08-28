@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.offsetmonkey538.tinyterrors.common.client.render.ModEntityModelLayers;
-import top.offsetmonkey538.tinyterrors.common.client.render.SkeletonEntityRenderer;
+import top.offsetmonkey538.tinyterrors.client.render.ModEntityModelLayers;
+import top.offsetmonkey538.tinyterrors.client.render.SkeletonEntityRenderer;
 
 @Mixin(StrayEntityRenderer.class)
 public abstract class StrayEntityRendererMixin implements SkeletonEntityRenderer {

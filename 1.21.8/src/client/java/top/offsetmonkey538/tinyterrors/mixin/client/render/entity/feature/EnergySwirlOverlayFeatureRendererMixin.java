@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import top.offsetmonkey538.tinyterrors.util.CreeperSwirlRenderContext;
 
-// TODO: separate into different subprojects for multiversion
 @Mixin(EnergySwirlOverlayFeatureRenderer.class)
 public abstract class EnergySwirlOverlayFeatureRendererMixin {
 

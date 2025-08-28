@@ -11,10 +11,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.offsetmonkey538.tinyterrors.common.client.render.ModEntityModelLayers;
+import top.offsetmonkey538.tinyterrors.client.render.ModEntityModelLayers;
 import top.offsetmonkey538.tinyterrors.util.CreeperSwirlRenderContext;
 
-// TODO: separate into different subprojects for multiversion
 @Mixin(CreeperChargeFeatureRenderer.class)
 public abstract class CreeperChargeFeatureRendererMixin {
 

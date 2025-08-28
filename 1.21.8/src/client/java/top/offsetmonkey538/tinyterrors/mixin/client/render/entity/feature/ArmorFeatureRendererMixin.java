@@ -5,10 +5,8 @@ import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import top.offsetmonkey538.tinyterrors.common.client.render.SkeletonEntityRenderer;
-import top.offsetmonkey538.tinyterrors.common.mixin.client.render.entity.feature.FeatureRendererAccess;
+import top.offsetmonkey538.tinyterrors.client.render.SkeletonEntityRenderer;
 
-// TODO: separate into different subprojects for multiversion
 @Mixin(ArmorFeatureRenderer.class)
 public abstract class ArmorFeatureRendererMixin {
 
