@@ -3,7 +3,9 @@
   "package": "top.offsetmonkey538.tinyterrors.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
-
+    "render.LivingEntityRendererMixin",
+    "render.model.CreeperEntityModelMixin",
+    "render.model.ModelPartMixin"
   ],
   "injectors": {
     "defaultRequire": 1
