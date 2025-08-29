@@ -95,7 +95,7 @@ public abstract class ModelPartMixin implements ModelPartDuck {
             @Share(value = "tiny_terrors$headPartRenderMethodList") LocalRef<List<Runnable>> headPartRenderMethodList,
             @Share(value = "tiny_terrors$bodyPartRenderMethodList") LocalRef<List<Runnable>> bodyPartRenderMethodList
     ) {
-        if (!isCreeperRoot || !EntityRenderContext.isBaby.get() || headPartRenderMethodList.get() == null || bodyPartRenderMethodList.get() == null) {
+        if (!isCreeperRoot || !EntityRenderContext.isBaby.get()) {
             return;
         }
 
