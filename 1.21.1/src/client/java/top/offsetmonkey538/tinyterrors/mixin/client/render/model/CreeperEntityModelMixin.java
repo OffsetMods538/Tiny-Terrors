@@ -5,9 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import top.offsetmonkey538.tinyterrors.client.duck.ModelPartDuck;
 
@@ -21,7 +19,7 @@ public abstract class CreeperEntityModelMixin {
                     target = "Lnet/minecraft/client/model/ModelPart;getChild(Ljava/lang/String;)Lnet/minecraft/client/model/ModelPart;"
             )
     )
-    private ModelPart e(ModelPart instance, String name, Operation<ModelPart> original) {
+    private ModelPart tiny_terrors$markCreeperModelParts(ModelPart instance, String name, Operation<ModelPart> original) {
         final ModelPart childModel = original.call(instance, name);
 
         if (EntityModelPartNames.HEAD.equals(name)) {

@@ -1,7 +1,6 @@
 package top.offsetmonkey538.tinyterrors.mixin.entity.skeleton;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.entity.*;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;

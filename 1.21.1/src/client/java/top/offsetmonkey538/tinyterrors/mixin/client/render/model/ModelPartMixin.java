@@ -1,6 +1,5 @@
 package top.offsetmonkey538.tinyterrors.mixin.client.render.model;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -18,10 +17,15 @@ import top.offsetmonkey538.tinyterrors.client.util.EntityRenderContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Mixin(ModelPart.class)
 public abstract class ModelPartMixin implements ModelPartDuck {
+
+    @Unique
+    private static final float tiny_terrors$BABY_CREEPER_HEAD_Y_OFFSET = 14.0f;
+    @Unique
+    private static final float tiny_terrors$BABY_CREEPER_BODY_Y_OFFSET = 24.0f;
+
 
     @Unique
     private boolean isCreeperRoot = false;
@@ -35,7 +39,7 @@ public abstract class ModelPartMixin implements ModelPartDuck {
                     target = "Ljava/util/Map;values()Ljava/util/Collection;"
             )
     )
-    private void tiny_terrors$initializeLists(
+    private void tiny_terrors$initializeBabyCreeperHeadAndBodyPartLists(
             MatrixStack matrices,
             VertexConsumer vertices,
             int light,
@@ -58,7 +62,7 @@ public abstract class ModelPartMixin implements ModelPartDuck {
                     target = "Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"
             )
     )
-    private void tiny_terrors$transformBabyCreeperPLSWORKLNOW(
+    private void tiny_terrors$populateBabyCreeperHeadAndBodyPartLists(
             ModelPart instance,
             MatrixStack matrices,
             VertexConsumer vertices,
@@ -85,7 +89,7 @@ public abstract class ModelPartMixin implements ModelPartDuck {
                     target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V"
             )
     )
-    private void tiny_terrors$actuallyRenderThisShit(
+    private void tiny_terrors$transformAndRenderBabyCreeperHeadAndBodyParts(
             MatrixStack matrices,
             VertexConsumer vertices,
             int light,
@@ -99,33 +103,23 @@ public abstract class ModelPartMixin implements ModelPartDuck {
             return;
         }
 
-        final boolean headScaled = true;
-        final float childHeadYOffset = 14.0f;
-        final float childHeadZOffset = 0.0f;
-        final float invertedChildHeadScale = 2.0f;
-        final float invertedChildBodyScale = 2.0f;
-        final float childBodyYOffset = 24.0f;
-
-
+        // THe head
         matrices.push();
 
-        if (headScaled) {
-            float f = 1.5F / invertedChildHeadScale;
-            matrices.scale(f, f, f);
-        }
+        matrices.scale(0.75f, 0.75f, 0.75f);
+        matrices.translate(0f, tiny_terrors$BABY_CREEPER_HEAD_Y_OFFSET / 16f, 0f);
 
-        matrices.translate(0.0F, childHeadYOffset / 16.0F, childHeadZOffset / 16.0F);
         headPartRenderMethodList.get().forEach(Runnable::run);
 
         matrices.pop();
 
 
-
+        // Nou da bodi
         matrices.push();
 
-        float f = 1.0F / invertedChildBodyScale;
-        matrices.scale(f, f, f);
-        matrices.translate(0.0F, childBodyYOffset / 16.0F, 0.0F);
+        matrices.scale(0.5f, 0.5f, 0.5f);
+        matrices.translate(0.0F, tiny_terrors$BABY_CREEPER_BODY_Y_OFFSET / 16.0F, 0.0F);
+
         bodyPartRenderMethodList.get().forEach(Runnable::run);
 
         matrices.pop();
