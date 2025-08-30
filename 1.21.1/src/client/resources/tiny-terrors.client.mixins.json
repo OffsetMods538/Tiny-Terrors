@@ -5,10 +5,14 @@
   "client": [
     "render.EnergySwirlOverlayFeatureRendererMixin",
     "render.LivingEntityRendererMixin",
+    "render.model.AnimalModelMixin",
     "render.model.CreeperEntityModelMixin",
     "render.model.ModelPartMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "render.model.BipedEntityModelMixin"
+  ]
 }
