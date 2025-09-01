@@ -2,6 +2,9 @@
 [![discord-singular](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.offsetmonkey538.top/)
 [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/tiny-terrors)
 
+![All baby mobs added by the mod side by side. From left to right: creeper, enderman, skeleton, stray, bogged, wither skeleton](https://cdn.modrinth.com/data/RpKPCJcY/images/65a6fc66adfac91fd2175b39f5575b8d556164ee.png)
+---
+
 You thought baby zombies were bad enough? Wait until you get instantly blown up by a baby creeper
 
 Adds baby versions of creepers, endermen, skeletons, stray, bogged and wither skeletons.  
