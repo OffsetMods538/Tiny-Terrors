@@ -1,4 +1,6 @@
-license="MIT"
+modLoader     = "javafml"
+loaderVersion = "*"
+license       = "MIT"
 
 [properties]
 "connector:placeholder" = true
