@@ -24,6 +24,26 @@ ext {
 
 allprojects {
     group = "top.offsetmonkey538.tinyterrors"
+
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            name = "DevAuth"
+            url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1"
+            content {
+                includeGroup "me.djtheredstoner"
+            }
+        }
+        maven {
+            name = "OffsetMods538"
+            url  = "https://maven.offsetmonkey538.top/releases"
+            content {
+                includeGroup "top.offsetmonkey538.offsetconfig538"
+            }
+        }
+    }
 }
 
 configure(subprojects.findAll {!it.name.endsWith("neoforge")}) {
@@ -97,25 +117,6 @@ configure(subprojects.findAll {!it.name.endsWith("neoforge")}) {
 
         include.extendsFrom includeApi
         api.extendsFrom     includeApi
-    }
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        maven {
-            name = "DevAuth"
-            url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1"
-            content {
-                includeGroup "me.djtheredstoner"
-            }
-        }
-        maven {
-            name = "OffsetMods538"
-            url  = "https://maven.offsetmonkey538.top/releases"
-            content {
-                includeGroup "top.offsetmonkey538.offsetconfig538"
-            }
-        }
     }
 
     dependencies {
@@ -223,6 +224,49 @@ configure(subprojects.findAll {it.name != "common" && !it.name.endsWith("neoforg
 }
 
 configure(subprojects.findAll {it.name != "common" && it.name.endsWith("neoforge")}) {
+    apply plugin: 'java'
+    apply plugin: "io.github.dexman545.outlet"
+
+    base.archivesName = "tiny-terrors"
+    version = "${rootProject.versionPrefix}+${project.minecraft_version}+neoforge"
+
+    outlet {
+        maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
+        mcVersionRange = project.supported_minecraft_versions
+        allowedReleaseTypes = [ReleaseType.RELEASE]
+    }
+
+    processResources {
+        final Map properties = Map<String, String>.of(
+                "modVersion",                 project.version,
+                "supportedMinecraftVersions", project.supported_minecraft_versions_neo
+        )
+
+        inputs.properties(properties)
+
+        filesMatching("META-INF/neoforge.mods.toml") {
+            expand(properties)
+        }
+
+        exclude ".cache/**"
+    }
+
+    def fabricRemapJar = project.getParent().tasks.named('remapJar')
+
+    tasks.register('neoforgeJar', Jar) {
+        dependsOn(fabricRemapJar)
+
+        from(zipTree(fabricRemapJar.flatMap { it.archiveFile }))
+        from(sourceSets.main.output)
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    tasks.named('jar') {
+        enabled = false
+    }
+    tasks.assemble.dependsOn(tasks.neoforgeJar)
+
     modrinth {
         // Main properties
         token = System.getenv("MODRINTH_TOKEN")

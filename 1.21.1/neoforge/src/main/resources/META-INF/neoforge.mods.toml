@@ -1,0 +1,25 @@
+license="MIT"
+
+[properties]
+"connector:placeholder" = true
+
+[[mods]]
+modId       = "tiny-terrors"
+displayName = "Tiny Terrors"
+description = "Adds baby monsters"
+version     = "${modVersion}"
+authors     = "OffsetMonkey538"
+
+[[dependencies.tiny-terrors]]
+modId        = "minecraft"
+mandatory    = true
+versionRange = "${supportedMinecraftVersions}"
+ordering     = "NONE"
+side         = "BOTH"
+
+[[dependencies.tiny-terrors]]
+modId        = "connector"
+mandatory    = true
+versionRange = "*"
+ordering     = "NONE"
+side         = "BOTH"
