@@ -4,7 +4,7 @@ plugins {
     id 'java'
 	id 'fabric-loom' version '1.11-SNAPSHOT' apply false
 	id 'io.github.dexman545.outlet' version '1.6.1' apply false
-	id 'com.modrinth.minotaur' version '2.+' apply true
+	id 'com.modrinth.minotaur' version '2.+' apply false
 }
 
 ext {
@@ -176,6 +176,8 @@ configure(subprojects.findAll {it.name == "common"}) {
 }
 
 configure(subprojects.findAll {it.name != "common" && !it.name.endsWith("neoforge")}) {
+    apply plugin: 'com.modrinth.minotaur'
+
     configurations {
         common {
             canBeResolved = true
@@ -221,11 +223,14 @@ configure(subprojects.findAll {it.name != "common" && !it.name.endsWith("neoforg
             required.project "fabric-api"
         }
     }
+
+    tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 }
 
 configure(subprojects.findAll {it.name != "common" && it.name.endsWith("neoforge")}) {
     apply plugin: 'java'
     apply plugin: "io.github.dexman545.outlet"
+    apply plugin: 'com.modrinth.minotaur'
 
     base.archivesName = "tiny-terrors"
     version = "${rootProject.versionPrefix}+${project.minecraft_version}+neoforge"
@@ -301,7 +306,6 @@ configure(subprojects.findAll {it.name != "common" && it.name.endsWith("neoforge
             required.project "forgified-fabric-api"
         }
     }
+
+    tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 }
-
-
-tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
