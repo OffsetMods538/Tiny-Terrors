@@ -167,10 +167,6 @@ configure(subprojects.findAll {!it.name.endsWith("neoforge")}) {
     }
 }
 
-
-tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
-
-
 configure(subprojects.findAll {it.name == "common"}) {
     dependencies {
         // OffsetConfig538
@@ -262,3 +258,6 @@ configure(subprojects.findAll {it.name != "common" && it.name.endsWith("neoforge
         }
     }
 }
+
+
+tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
