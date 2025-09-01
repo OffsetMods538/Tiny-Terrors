@@ -31,8 +31,13 @@ configure(subprojects.findAll {!it.name.endsWith("neoforge")}) {
     apply plugin: "fabric-loom"
     apply plugin: "io.github.dexman545.outlet"
 
-    base.archivesName = "tiny-terrors-${project.project_name}"
-    version = project.project_name == "common" ? "${rootProject.versionPrefix}" : "${rootProject.versionPrefix}+${project.minecraft_version}"
+    if (project.project_name == "common") {
+        base.archivesName = "tiny-terrors-common"
+        version = "${rootProject.versionPrefix}"
+    } else {
+        base.archivesName = "tiny-terrors"
+        version = "${rootProject.versionPrefix}+${project.minecraft_version}"
+    }
 
     outlet {
         maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
