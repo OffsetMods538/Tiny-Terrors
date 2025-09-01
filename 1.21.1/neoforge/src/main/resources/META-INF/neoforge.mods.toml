@@ -6,20 +6,20 @@ license       = "MIT"
 "connector:placeholder" = true
 
 [[mods]]
-modId       = "tiny-terrors"
+modId       = "tiny_terrors"
 displayName = "Tiny Terrors"
 description = "Adds baby monsters"
 version     = "${modVersion}"
 authors     = "OffsetMonkey538"
 
-[[dependencies.tiny-terrors]]
+[[dependencies.tiny_terrors]]
 modId        = "minecraft"
 mandatory    = true
 versionRange = "${supportedMinecraftVersions}"
 ordering     = "NONE"
 side         = "BOTH"
 
-[[dependencies.tiny-terrors]]
+[[dependencies.tiny_terrors]]
 modId        = "connector"
 mandatory    = true
 versionRange = "*"
