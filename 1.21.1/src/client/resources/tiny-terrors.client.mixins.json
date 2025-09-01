@@ -14,5 +14,8 @@
   },
   "mixins": [
     "render.model.BipedEntityModelMixin"
-  ]
+  ],
+  "mixinextras": {
+    "minVersion": "0.5.0"
+  }
 }

@@ -1,9 +1,8 @@
 package top.offsetmonkey538.tinyterrors.common.mixin.entity;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.data.DataTracker;
@@ -14,6 +13,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -55,6 +55,9 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
         builder.add(tiny_terrors$BABY, false);
     }
 
+    /*
+    TODO: Switch back to this method as it doesn't fully overwrite the explosion radius calculation.
+       Can't use currently as connector has some problems with expressions
     @Definition(id = "explosionRadius", field = "Lnet/minecraft/entity/mob/CreeperEntity;explosionRadius:I")
     @Expression("(float) this.explosionRadius")
     @ModifyExpressionValue(
@@ -65,6 +68,18 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     )
     private float tiny_terrors$setBabyExplosionRadius(float original) {
         return isBaby() ? (float) config.get().creeperConfig.explosionRadius : original;
+    }
+     */
+    @WrapOperation(
+            method = "explode",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"
+            )
+    )
+    private Explosion tiny_terrors$setBabyExplosionRadius(World instance, Entity entity, double x, double y, double z, float power, World.ExplosionSourceType explosionSourceType, Operation<Explosion> original, @Local(ordinal = 0) float multiplier) {
+        if (isBaby()) power = (float) config.get().creeperConfig.explosionRadius * multiplier;
+        return original.call(instance, entity, x, y, z, power, explosionSourceType);
     }
 
 
