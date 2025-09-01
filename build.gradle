@@ -1,192 +1,307 @@
 import dex.plugins.outlet.v2.util.ReleaseType
 
 plugins {
-	id 'fabric-loom' version '1.11-SNAPSHOT'
-	id 'io.github.dexman545.outlet' version '1.6.1'
-	id 'com.modrinth.minotaur' version '2.+'
+    id 'java'
+	id 'fabric-loom' version '1.11-SNAPSHOT' apply false
+	id 'io.github.dexman545.outlet' version '1.6.1' apply false
+	id 'com.modrinth.minotaur' version '2.+' apply true
 }
 
-base.archivesName = "tiny-terrors"
-group = "top.offsetmonkey538.tinyterrors"
+ext {
+    versionPrefix = project.mod_version
 
+    if ("true".equalsIgnoreCase(System.getenv("IS_DEBUG"))) {
+        versionPrefix = "${versionPrefix}-${System.currentTimeMillis()}"
+    }
 
-version = project.mod_version
+    final String customVersion = System.getenv("CUSTOM_VERSION")
+    if (customVersion != null && !customVersion.isEmpty()) {
+        versionPrefix = "${versionPrefix}-${customVersion}"
+    }
 
-if ("true".equalsIgnoreCase(System.getenv("IS_DEBUG"))) {
-	version = "${version}-${System.currentTimeMillis()}"
+    println "Version Prefix: ${versionPrefix}"
 }
 
-final String customVersion = System.getenv("CUSTOM_VERSION")
-if (customVersion != null && !customVersion.isEmpty()) {
-	version = "${version}-${customVersion}"
+allprojects {
+    group = "top.offsetmonkey538.tinyterrors"
+
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            name = "DevAuth"
+            url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1"
+            content {
+                includeGroup "me.djtheredstoner"
+            }
+        }
+        maven {
+            name = "OffsetMods538"
+            url  = "https://maven.offsetmonkey538.top/releases"
+            content {
+                includeGroup "top.offsetmonkey538.offsetconfig538"
+            }
+        }
+    }
 }
 
-version = "${version}+${project.minecraft_version}"
-println "Version: ${version}"
+configure(subprojects.findAll {!it.name.endsWith("neoforge")}) {
+    apply plugin: "java"
+    apply plugin: "fabric-loom"
+    apply plugin: "io.github.dexman545.outlet"
 
-outlet {
-	maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
-	mcVersionRange = project.supported_minecraft_versions
-	allowedReleaseTypes = [ReleaseType.RELEASE]
-	propertiesData = [
-			'fapi_version': outlet.fapiVersion(project.minecraft_version),
-			'yarn_version': outlet.yarnVersion(project.minecraft_version),
-			'loader_version': outlet.loaderVersion()
-	]
+    if (project.project_name == "common") {
+        base.archivesName = "tiny-terrors-common"
+        version = "${rootProject.versionPrefix}"
+    } else {
+        base.archivesName = "tiny-terrors"
+        version = "${rootProject.versionPrefix}+${project.minecraft_version}"
+    }
+
+    outlet {
+        maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
+        mcVersionRange = project.supported_minecraft_versions
+        allowedReleaseTypes = [ReleaseType.RELEASE]
+        propertiesData = [
+                'fapi_version': outlet.fapiVersion(project.minecraft_version),
+                'yarn_version': outlet.yarnVersion(project.minecraft_version),
+                'loader_version': outlet.loaderVersion()
+        ]
+    }
+
+    loom {
+        splitEnvironmentSourceSets()
+
+        mods {
+            "tiny-terrors" {
+                sourceSet sourceSets.main
+                sourceSet sourceSets.client
+            }
+        }
+
+        accessWidenerPath = file("src/main/resources/tiny-terrors.accesswidener")
+
+        runs {
+            server {
+                runDir "run/server"
+            }
+            client {
+                runDir "run/client"
+            }
+        }
+    }
+
+    // https://gist.github.com/maityyy/3dbcd558d58a6412c3a2a38c72706e8e
+    afterEvaluate {
+        loom.runs.configureEach {
+            vmArg "-javaagent:${configurations.compileClasspath.find{ it.name.contains("sponge-mixin") }}"
+            if (System.getenv("DISABLE_PROPERTIES_UPDATE") == null) vmArg "-Ddevauth.enabled=true"
+        }
+    }
+
+    configurations {
+        includeModImplementation
+
+        include.extendsFrom           includeModImplementation
+        modImplementation.extendsFrom includeModImplementation
+
+
+        includeImplementation
+
+        include.extendsFrom        includeImplementation
+        implementation.extendsFrom includeImplementation
+
+
+        includeApi
+
+        include.extendsFrom includeApi
+        api.extendsFrom     includeApi
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${project.minecraft_version}"
+        mappings "net.fabricmc:yarn:${project.yarn_version}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+        // DevAuth
+        modLocalRuntime "me.djtheredstoner:DevAuth-fabric:${rootProject.devauth_version}"
+        // Fabric API
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fapi_version}"
+
+        // Uncomment for including a module of fabric api
+        // includeModImplementation fabricApi.module("fabric-api-base", project.fapi_version)
+    }
+
+    processResources {
+        final Map properties = Map<String, String>.of(
+                "modVersion",                 project.version,
+                "supportedMinecraftVersions", project.supported_minecraft_versions
+        )
+
+        inputs.properties(properties)
+
+        filesMatching("fabric.mod.json") {
+            expand(properties)
+        }
+
+        exclude ".cache/**"
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 21
+    }
+
+    java {
+        withSourcesJar()
+
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    jar {
+        inputs.property "archivesName", project.base.archivesName
+
+        from("${rootProject.projectDir}/LICENSE") {
+            rename { "${it}_${inputs.properties.archivesName}" }
+        }
+    }
 }
 
-
-loom {
-	splitEnvironmentSourceSets()
-
-	mods {
-		"tiny-terrors" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
-
-	accessWidenerPath = file("src/main/resources/tiny-terrors.accesswidener")
-
-	runs {
-		server {
-			runDir "run/server"
-		}
-		client {
-			runDir "run/client"
-		}
-	}
+configure(subprojects.findAll {it.name == "common"}) {
+    dependencies {
+        // OffsetConfig538
+        includeApi "top.offsetmonkey538.offsetconfig538:offsetconfig538:${project.offsetconfig538_version}"
+    }
 }
 
-// https://gist.github.com/maityyy/3dbcd558d58a6412c3a2a38c72706e8e
-afterEvaluate {
-	loom.runs.configureEach {
-		vmArg "-javaagent:${configurations.compileClasspath.find{ it.name.contains("sponge-mixin") }}"
-		if (System.getenv("DISABLE_PROPERTIES_UPDATE") == null) vmArg "-Ddevauth.enabled=true"
-	}
+configure(subprojects.findAll {it.name != "common" && !it.name.endsWith("neoforge")}) {
+    configurations {
+        common {
+            canBeResolved = true
+            canBeConsumed = false
+        }
+        api.extendsFrom common
+    }
+    dependencies {
+        common project(path: ":common", configuration: "namedElements")
+        include project(path: ":common")
+    }
+
+    modrinth {
+        // Main properties
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = "tiny-terrors"
+        gameVersions = outlet.mcVersions()
+        loaders = ["fabric"]
+
+        // Version stuff
+        def customVersionName = System.getenv("VERSION_NAME")
+        if (customVersionName != null) versionName = customVersionName
+
+        versionNumber = "${project.version}"
+
+        def isPreRelease = System.getenv("VERSION_IS_PRERELEASE")
+        versionType = "true".equalsIgnoreCase(isPreRelease) ? "beta" : "release"
+
+        if (project.mod_version.contains("beta")) versionType = "beta"
+        if (project.mod_version.contains("alpha")) versionType = "alpha"
+
+        // Files
+        uploadFile = remapJar.archiveFile
+        additionalFiles = [sourcesJar.archiveFile]
+
+
+        // Project info
+        syncBodyFrom = rootProject.file("README.md").text
+        def changelogEnv = System.getenv("VERSION_CHANGELOG")
+        if (changelogEnv != null) changelog = changelogEnv
+
+        dependencies {
+            required.project "fabric-api"
+        }
+    }
 }
 
-configurations {
-	includeModImplementation
+configure(subprojects.findAll {it.name != "common" && it.name.endsWith("neoforge")}) {
+    apply plugin: 'java'
+    apply plugin: "io.github.dexman545.outlet"
 
-	include.extendsFrom           includeModImplementation
-	modImplementation.extendsFrom includeModImplementation
+    base.archivesName = "tiny-terrors"
+    version = "${rootProject.versionPrefix}+${project.minecraft_version}+neoforge"
+
+    outlet {
+        maintainPropertiesFile = System.getenv("DISABLE_PROPERTIES_UPDATE") == null
+        mcVersionRange = project.supported_minecraft_versions
+        allowedReleaseTypes = [ReleaseType.RELEASE]
+    }
+
+    processResources {
+        final Map properties = Map<String, String>.of(
+                "modVersion",                 project.version,
+                "supportedMinecraftVersions", project.supported_minecraft_versions_neo
+        )
+
+        inputs.properties(properties)
+
+        filesMatching("META-INF/neoforge.mods.toml") {
+            expand(properties)
+        }
+
+        exclude ".cache/**"
+    }
+
+    def fabricRemapJar = project.getParent().tasks.named('remapJar')
+
+    tasks.register('neoforgeJar', Jar) {
+        dependsOn(fabricRemapJar)
+
+        from(zipTree(fabricRemapJar.flatMap { it.archiveFile }))
+        from(sourceSets.main.output)
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    tasks.named('jar') {
+        enabled = false
+    }
+    tasks.assemble.dependsOn(tasks.neoforgeJar)
+
+    modrinth {
+        // Main properties
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = "tiny-terrors"
+        gameVersions = outlet.mcVersions()
+        loaders = ["neoforge"]
+
+        // Version stuff
+        def customVersionName = System.getenv("VERSION_NAME")
+        if (customVersionName != null) versionName = customVersionName
+
+        versionNumber = "${project.version}"
+
+        def isPreRelease = System.getenv("VERSION_IS_PRERELEASE")
+        versionType = "true".equalsIgnoreCase(isPreRelease) ? "beta" : "release"
+
+        if (project.mod_version.contains("beta")) versionType = "beta"
+        if (project.mod_version.contains("alpha")) versionType = "alpha"
+
+        // Files
+        uploadFile = project.getParent().remapJar.archiveFile
+        additionalFiles = [project.getParent().sourcesJar.archiveFile]
 
 
-	includeImplementation
+        // Project info
+        syncBodyFrom = rootProject.file("README.md").text
+        def changelogEnv = System.getenv("VERSION_CHANGELOG")
+        if (changelogEnv != null) changelog = changelogEnv
 
-	include.extendsFrom        includeImplementation
-	implementation.extendsFrom includeImplementation
-
-
-	includeApi
-
-	include.extendsFrom includeApi
-	api.extendsFrom     includeApi
+        dependencies {
+            required.project "connector"
+            required.project "forgified-fabric-api"
+        }
+    }
 }
 
-repositories {
-	mavenCentral()
-	mavenLocal()
-	maven {
-		name = "DevAuth"
-		url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1"
-		content {
-			includeGroup "me.djtheredstoner"
-		}
-	}
-	maven {
-		name = "OffsetMods538"
-		url  = "https://maven.offsetmonkey538.top/releases"
-		content {
-			includeGroup "top.offsetmonkey538.offsetconfig538"
-		}
-	}
-}
-
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_version}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// DevAuth
-	modLocalRuntime "me.djtheredstoner:DevAuth-fabric:${devauth_version}"
-	// Fabric API
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fapi_version}"
-
-	// Uncomment for including a module of fabric api
-	// includeModImplementation fabricApi.module("fabric-api-base", project.fapi_version)
-
-	// OffsetConfig538
-	includeImplementation "top.offsetmonkey538.offsetconfig538:offsetconfig538:${project.offsetconfig538_version}"
-}
-
-processResources {
-	final Map properties = Map<String, String>.of(
-			"modVersion",                 project.version,
-			"supportedMinecraftVersions", project.supported_minecraft_versions
-	)
-
-	inputs.properties(properties)
-
-	filesMatching("fabric.mod.json") {
-		expand(properties)
-	}
-
-	exclude ".cache/**"
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-}
-
-java {
-	withSourcesJar()
-
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
-}
-
-jar {
-	inputs.property "archivesName", project.base.archivesName
-
-	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}" }
-	}
-}
-
-modrinth {
-	// Main properties
-	token = System.getenv("MODRINTH_TOKEN")
-	projectId = "tiny-terrors"
-	gameVersions = outlet.mcVersions()
-
-	// Version stuff
-	def customVersionName = System.getenv("VERSION_NAME")
-	if (customVersionName != null) versionName = customVersionName
-
-	versionNumber = "${project.version}"
-
-	def isPreRelease = System.getenv("VERSION_IS_PRERELEASE")
-	versionType = "true".equalsIgnoreCase(isPreRelease) ? "beta" : "release"
-
-	if (project.mod_version.contains("beta")) versionType = "beta"
-	if (project.mod_version.contains("alpha")) versionType = "alpha"
-
-	// Files
-	uploadFile = remapJar.archiveFile
-	//additionalFiles = [sourcesJar.archiveFile, javadocJar.archiveFile]
-	additionalFiles = [sourcesJar.archiveFile]
-
-
-	// Project info
-	syncBodyFrom = rootProject.file("README-modrinth.md").text
-	def changelogEnv = System.getenv("VERSION_CHANGELOG")
-	if (changelogEnv != null) changelog = changelogEnv
-
-	dependencies {
-		required.project "fabric-api"
-	}
-}
 
 tasks.modrinth.dependsOn(tasks.modrinthSyncBody)

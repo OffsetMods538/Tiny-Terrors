@@ -31,11 +31,6 @@ jobs:
         env:
           DISABLE_PROPERTIES_UPDATE: true
 
-      - name: Upload to GitHub
-        uses: softprops/action-gh-release@v2
-        with:
-          files: build/libs/*.jar
-
       - name: Upload to Modrinth
         run: ./gradlew modrinth
         env:
@@ -43,3 +38,13 @@ jobs:
           VERSION_NAME: ${{ github.event.release.name }}
           VERSION_IS_PRERELEASE: ${{ github.event.release.prerelease }}
           VERSION_CHANGELOG: ${{ github.event.release.body }}
+
+      - name: Delete common libs
+        run: rm -r ./common/build/libs
+
+      - name: Upload to GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./*/build/libs/*.jar
+            ./*/*/build/libs/*.jar
