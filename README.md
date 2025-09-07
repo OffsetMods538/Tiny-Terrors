@@ -37,7 +37,7 @@ All mobs include the following base config options:
 
 Creepers have the following additional options:
 - `fuseTime`: amount of ticks until the baby creeper explodes after getting near a player
-- `explosionRadius`: radius of the baby creeper's explosion
+- `explosionRadiusMultiplier`: factor to multiply the radius of the baby creeper's explosion with
 - `igniteRadiusMultiplier`: factor to multiply the creeper's base ignite radius with
 
 Endermen have the following additional options:
