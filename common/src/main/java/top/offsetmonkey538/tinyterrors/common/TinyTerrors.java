@@ -55,7 +55,8 @@ public final class TinyTerrors implements ModInitializer {
 
 
         // Spawn a new chicken
-        final ChickenEntity chicken = EntityType.CHICKEN.create(entity.getWorld());
+        //final ChickenEntity chicken = EntityType.CHICKEN.create(entity.getWorld());
+        final ChickenEntity chicken = TinyTerrorsPlatform.createChicken(entity.getWorld());
         if (chicken == null) return;
 
         chicken.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), 0.0F);

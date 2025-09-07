@@ -1,10 +1,14 @@
 package top.offsetmonkey538.tinyterrors.common.config;
 
 import blue.endless.jankson.Comment;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonPrimitive;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
 import top.offsetmonkey538.offsetconfig538.api.config.Config;
+import top.offsetmonkey538.offsetconfig538.api.config.Datafixer;
 
 import java.nio.file.Path;
 
@@ -20,10 +24,10 @@ public final class ModConfig implements Config {
     public BabyAbstractSkeletonConfig witherSkeletonConfig = new BabyAbstractSkeletonConfig();
 
     public static class BaseBabyMobConfig {
-        @Comment("Default: 0.5")
+        @Comment("Default: 2.5")
         public double xpMultiplier = 2.5;
 
-        @Comment("Default: 0.05")
+        @Comment("Default: 0.1")
         public double spawnChance = 0.1;
 
         @Comment("Default: 0.05")
@@ -44,8 +48,8 @@ public final class ModConfig implements Config {
 
         @Comment("Amount of ticks until baby creeper explodes after getting close to a player. Default: 5")
         public int fuseTime = 5;
-        @Comment("Default: 2.5")
-        public double explosionRadius = 2.5;
+        @Comment("Default: 0.85")
+        public double explosionRadiusMultiplier = 0.85;
         @Comment("Default: 0.5")
         public double igniteRadiusMultiplier = 0.5;
     }
@@ -68,6 +72,30 @@ public final class ModConfig implements Config {
         public double bowAttackIntervalMultiplier = 0.5;
     }
 
+
+    @Override
+    public @Range(from = 0L, to = 2147483647L) int getConfigVersion() {
+        return 1;
+    }
+
+    @Override
+    public @NotNull Datafixer[] getDatafixers() {
+        return new Datafixer[] {
+                (original, jankson) -> {
+                    // 0 -> 1
+                    final JsonObject creeperConfig = original.getObject("creeperConfig");
+                    if (creeperConfig == null) return;
+
+                    final double creeperExplosionRadius = creeperConfig.getDouble("explosionRadius", 2.5);
+                    final double creeperExplosionRadiusMultiplier = creeperExplosionRadius == 2.5 ? 0.85 : creeperExplosionRadius / 3;
+
+                    creeperConfig.remove("explosionRadius");
+                    creeperConfig.put("explosionRadiusMultiplier", JsonPrimitive.of(creeperExplosionRadiusMultiplier));
+
+                    original.put("creeperConfig", creeperConfig);
+                }
+        };
+    }
 
     @Override
     public @NotNull Path getFilePath() {
