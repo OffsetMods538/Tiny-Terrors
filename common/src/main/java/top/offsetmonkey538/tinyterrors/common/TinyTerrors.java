@@ -1,12 +1,17 @@
 package top.offsetmonkey538.tinyterrors.common;
 
+import com.mojang.serialization.Codec;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
@@ -16,6 +21,7 @@ import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import top.offsetmonkey538.tinyterrors.common.attachment.ModAttachmentTypes;
 import top.offsetmonkey538.tinyterrors.common.config.ModConfig;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigHolder;
 import top.offsetmonkey538.offsetconfig538.api.config.ConfigManager;
@@ -23,6 +29,8 @@ import top.offsetmonkey538.tinyterrors.common.platform.TinyTerrorsPlatform;
 
 import java.util.List;
 import java.util.ServiceLoader;
+
+import static top.offsetmonkey538.tinyterrors.common.attachment.ModAttachmentTypes.IS_BABY_ATTACHMENT;
 
 // TODO: all the main source set mixins need to have data saving and loading moved to multiversion subprojects, but otherwise at least MCDev doesn't seem to complain much?
 public final class TinyTerrors implements ModInitializer {
@@ -36,7 +44,7 @@ public final class TinyTerrors implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+        ModAttachmentTypes.initialize();
 	}
 
 	public static Identifier id(String path) {
@@ -77,8 +85,22 @@ public final class TinyTerrors implements ModInitializer {
         return entityData;
     }
 
+    //todo: remove once nothing uses this again
     public static void setBaby(MobEntity entity, boolean isBaby, TrackedData<Boolean> isBabyTracked, EntityAttributeModifier speedModifier) {
         entity.getDataTracker().set(isBabyTracked, isBaby);
+
+        final World world = entity.getWorld();
+        if (world == null || world.isClient) return;
+
+        final EntityAttributeInstance movementSpeed = entity.getAttributeInstance(TinyTerrorsPlatform.getSpeedAttribute());
+        if (movementSpeed == null) return; // Really shouldn't happen with movement speed but sure, it's marked Nullable
+
+        movementSpeed.removeModifier(BABY_SPEED_MODIFIER_ID);
+        if (isBaby) movementSpeed.addTemporaryModifier(speedModifier);
+    }
+
+    public static void setBaby(MobEntity entity, boolean isBaby, EntityAttributeModifier speedModifier) {
+        entity.setAttached(IS_BABY_ATTACHMENT, isBaby);
 
         final World world = entity.getWorld();
         if (world == null || world.isClient) return;

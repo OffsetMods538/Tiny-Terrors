@@ -29,6 +29,7 @@ public abstract class DummyMobEntityMixin extends DummyLivingEntityMixin {
         super(type, world);
     }
 
+    // TODO: remvoe once nothjing uses
     // This is only for Stray to implement as it doesn't implement initDataTracker
     @WrapMethod(
             method = "initDataTracker"

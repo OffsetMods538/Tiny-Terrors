@@ -23,6 +23,7 @@ import top.offsetmonkey538.tinyterrors.common.TinyTerrors;
 import top.offsetmonkey538.tinyterrors.common.mixin.entity.dummy.DummyMobEntityMixin;
 
 import static top.offsetmonkey538.tinyterrors.common.TinyTerrors.*;
+import static top.offsetmonkey538.tinyterrors.common.attachment.ModAttachmentTypes.IS_BABY_ATTACHMENT;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
@@ -38,20 +39,21 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     private static final EntityDimensions tiny_terrors$BABY_DIMENSIONS = EntityType.CREEPER.getDimensions().scaled(0.5F).withEyeHeight(0.8F);
 
     @Unique
-    @SuppressWarnings("WrongEntityDataParameterClass")
-    private static final TrackedData<Boolean> tiny_terrors$BABY = DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
-    @Unique
     private static final EntityAttributeModifier tiny_terrors$BABY_SPEED_BONUS = new EntityAttributeModifier(
             BABY_SPEED_MODIFIER_ID, config.get().creeperConfig.speedMultiplier, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
     );
 
     @Inject(
-            method = "initDataTracker",
+            method = "<init>",
             at = @At("TAIL")
     )
-    private void tiny_terrors$addBabyData(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(tiny_terrors$BABY, false);
+    @SuppressWarnings("UnstableApiUsage")
+    private void tiny_terrors$addIsBabyAttachmentChangeListener(EntityType<?> entityType, World world, CallbackInfo ci) {
+        this.onAttachedSet(IS_BABY_ATTACHMENT).register((oldValue, newValue) -> {
+            if (newValue) this.fuseTime = config.get().creeperConfig.fuseTime;
+
+            this.calculateDimensions();
+        });
     }
 
     @ModifyVariable(
@@ -70,8 +72,7 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     // Overrides from MobEntity
     @Override
     protected void tiny_terrors$setBaby(boolean newValue, Operation<Void> original) {
-        if (newValue) this.fuseTime = config.get().creeperConfig.fuseTime;
-        TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$BABY, tiny_terrors$BABY_SPEED_BONUS);
+        TinyTerrors.setBaby((MobEntity) (Object) this, newValue, tiny_terrors$BABY_SPEED_BONUS);
     }
 
     @Override
@@ -90,14 +91,8 @@ public abstract class CreeperEntityMixin extends DummyMobEntityMixin {
     // Overrides from LivingEntity
     @Override
     protected boolean tiny_terrors$isBaby(Operation<Boolean> original) {
-        return this.getDataTracker().get(tiny_terrors$BABY);
-    }
-
-    @Override
-    protected void tiny_terrors$onTrackedDataSet(TrackedData<?> data, Operation<Void> original) {
-        if (tiny_terrors$BABY.equals(data)) this.calculateDimensions();
-
-        super.tiny_terrors$onTrackedDataSet(data, original);
+        // TODO: may be able to use this implementation at the LivingEntity level. Though it may not be a good idea to check if the attachment exists on every LivingEntity?
+        return this.getAttachedOrElse(IS_BABY_ATTACHMENT, false);
     }
 
     @Override
